@@ -1,0 +1,10 @@
+.leaflet-control-layers {
+  background: rgba(50, 50, 50, 0.9);
+  color: #555;
+  border-radius: 6px;
+  padding: 6px;
+  font-family: sans-serif;
+}
+.leaflet-control-layers label {
+  color: #555;
+}

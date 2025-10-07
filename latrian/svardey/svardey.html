@@ -1,0 +1,182 @@
+<html>
+<head>
+  <title>Svardey</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../map-base.css">
+  <link rel="stylesheet" href="../../map-ui.css">
+  <link rel="stylesheet" href="../../map-layers.css">
+
+  <style>
+  
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="coords" style="position: fixed; bottom: 10px; left: 10px; color: white; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; font-family: monospace; z-index: 1000;"></div>
+
+  <div id="map"></div>
+  <div class="info-box" id="infoBox">
+    <h3>Svardey</h3>
+    <p>
+      svardey Info
+    </p>
+  </div>
+  
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+
+    const mapWidth = 2048;
+    const mapHeight = 2048;
+    const bounds = [[0, 0], [mapHeight, mapWidth]];
+    const map = L.map('map', {
+      crs: L.CRS.Simple,
+      minZoom: -1.5,
+      maxZoom: 4,
+      maxBounds: bounds,
+      maxBoundsViscosity: 1.0
+    }).fitBounds(bounds);
+
+    map.on('mousemove', e => {
+      const coordDiv = document.getElementById('coords');
+      const x = Math.round(e.latlng.lng);
+      const y = Math.round(e.latlng.lat);
+      coordDiv.innerHTML = `X: ${x}, Y: ${y}`;
+    });
+
+    const blank = L.imageOverlay('../../images/latrian/svardey/svardey.jpg', bounds).addTo(map);
+    const temperature = L.imageOverlay('../../images/latrian/svardey/svardey_temperture.jpg', bounds);
+
+    const baseMaps = {
+      "Blank": blank,
+      "Temperature": temperature,
+    };
+
+    const invisibleIcon = L.divIcon({
+      className: 'invisible-marker',
+      iconSize: [25, 25],
+      iconAnchor: [12, 12]
+    });
+
+    const townLayer = L.layerGroup();
+    const hamletLayer = L.layerGroup();
+    const fortressLayer = L.layerGroup();
+
+    // Towns
+    const towns = [
+      { name: "Leidarhof", coords: [750, 615], url: ".html" },
+      { name: "Austasta", coords: [1042, 1369], url: ".html" },
+      { name: "Fjallska", coords: [1245, 1004], url: ".html" },
+      { name: "Tanni", coords: [1210, 468], url: ".html" },
+      { name: "Holdstig", coords: [743, 493], url: "holdstig.html" }
+    ];
+    towns.forEach(town => {
+      const marker = L.marker(town.coords, { icon: invisibleIcon })
+        .bindPopup(`<a class='popup-link' href='${town.url}'>${town.name}</a>`);
+      townLayer.addLayer(marker);
+    });
+
+    // Hamlets
+    const hamlets = [
+      { name: "tbd", coords: [297, 763], url: ".html" },
+      { name: "tbd", coords: [634, 856], url: ".html" },
+      { name: "tbd", coords: [986, 1150], url: ".html" },
+      { name: "tbd", coords: [723, 1158], url: ".html" },
+      { name: "tbd", coords: [1222, 1253], url: ".html" },
+      { name: "tbd", coords: [1625, 1400], url: ".html" },
+      { name: "tbd", coords: [1633, 1651], url: ".html" },
+      { name: "tbd", coords: [1672, 1176], url: ".html" },
+      { name: "tbd", coords: [1540, 1042], url: ".html" },
+      { name: "tbd", coords: [1652, 757], url: ".html" },
+      { name: "tbd", coords: [951, 603], url: ".html" }
+    ];
+    hamlets.forEach(h => {
+      const marker = L.marker(h.coords, { icon: invisibleIcon })
+        .bindPopup(`<a class='popup-link' href='${h.url}'>${h.name}</a>`);
+      hamletLayer.addLayer(marker);
+    });
+
+    // Fortresses
+    const fortresses = [
+      { name: "Skógarborg", coords: [932, 749], url: "skogarborg.html" },
+      { name: "Einfǫldborg", coords: [837, 943], url: "einfoldborg.html" },
+      { name: "Árborg", coords: [1240, 1116], url: "arborg.html" },
+      { name: "Framhjáborg", coords: [1308, 1523], url: "framhjaborg.html" },
+      { name: "Sléttborg", coords: [1504, 706], url: "slettborg.html" },
+      { name: "Víkborg", coords: [1290, 627], url: "vikborg.html" }
+    ];
+    fortresses.forEach(f => {
+      const marker = L.marker(f.coords, { icon: invisibleIcon })
+        .bindPopup(`<a class='popup-link' href='${f.url}'>${f.name}</a>`);
+      fortressLayer.addLayer(marker);
+    });
+
+    L.control.layers(baseMaps, {}).addTo(map);
+
+      map.addLayer(hamletLayer);
+      map.addLayer(townLayer);
+      map.addLayer(fortressLayer);
+
+      map.on('baselayerchange', function(e) {
+      map.removeLayer(hamletLayer);
+      map.removeLayer(townLayer);
+      map.removeLayer(fortressLayer);
+
+    if (e.name === "Blank") {
+      map.addLayer(hamletLayer);
+      map.addLayer(townLayer);
+      map.addLayer(fortressLayer);
+      }
+    });
+
+    const InfoControl = L.Control.extend({
+      onAdd: function() {
+    const btn = L.DomUtil.create('button', 'info-toggle-btn');
+      btn.innerHTML = 'ℹ️ Info';
+
+   
+    L.DomEvent.disableClickPropagation(btn);
+
+    btn.onclick = function() {
+    const box = document.getElementById('infoBox');
+    box.classList.toggle('open');
+    };
+    return btn;
+  },
+  onRemove: function() {}
+});
+
+new InfoControl({ position: 'topright' }).addTo(map);
+
+// --- Go Back Button Control ---
+const BackButton = L.Control.extend({
+  onAdd: function() {
+    const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+    const btn = L.DomUtil.create('button', 'back-button', container);
+    btn.innerHTML = '⬅️ Back';
+    btn.title = 'Return to previous map';
+
+    // Prevent map drag when clicking
+    L.DomEvent.disableClickPropagation(btn);
+
+    // Set your custom back target here (relative or absolute URL)
+    const previousMapURL = '../latrian.html'; // <-- change manually per map
+
+    btn.onclick = function(e) {
+      e.stopPropagation();
+      window.location.href = previousMapURL;
+    };
+
+    return container;
+  },
+  onRemove: function() {}
+});
+
+// Add it to top-left next to zoom controls
+new BackButton({ position: 'topleft' }).addTo(map);
+
+  </script>
+</body>
+</html>

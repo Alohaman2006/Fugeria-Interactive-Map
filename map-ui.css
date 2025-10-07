@@ -1,0 +1,58 @@
+/* Info & Back Buttons */
+.back-button {
+  position: absolute;
+  z-index: 2000;
+  background: #222;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: sans-serif;
+  transition: background 0.2s;
+}
+
+.info-box {
+  position: absolute;
+  top: 50px; /* below the Leaflet buttons */
+  right: 10px;
+  background: rgba(30, 30, 30, 0.95);
+  color: white;
+  padding: 0 16px;
+  border-radius: 8px;
+  font-family: sans-serif;
+  font-size: 14px;
+  width: 280px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+  z-index: 500; /* BELOW leaflet control buttons */
+  pointer-events: none; /* allows map interaction when closed */
+}
+
+.info-box.open {
+  max-height: 400px;
+  opacity: 1;
+  padding: 12px 16px;
+  pointer-events: auto;
+  z-index: 998; /* BELOW button but above map */
+}
+
+.info-toggle-btn {
+  background: #333;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: sans-serif;
+  transition: background 0.2s;
+}
+
+.info-toggle-btn:hover {
+  background: #555;
+}
