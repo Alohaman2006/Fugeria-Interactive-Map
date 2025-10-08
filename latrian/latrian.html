@@ -50,12 +50,18 @@
     const politicalLayer = L.layerGroup();
     const temperatureLayer = L.layerGroup();
 
-    // Example nation (only for Political map)
+    // Nations > later make color "transparent"
     const svardey = L.polygon([
       [186, 1234], [206, 1154], [266, 1112], [266, 1104], [370, 1092], [432, 1106], [508, 1172], [486, 1302], [424, 1396], [242, 1206], [192, 1242]
     ], { color: "blue", weight: 2, fillOpacity: 0.2 })
       .bindPopup("<b><a href='svardey/svardey.html'>Svardey</a></b>");
     politicalLayer.addLayer(svardey);
+
+        const tbd = L.polygon([
+      [697, 1110], [727, 1121], [740, 1152], [759, 1135], [835, 1144], [833, 1201], [875, 1211], [893, 1230], [934, 1173], [954, 1177], [966, 1151], [1015, 1143], [1043, 1142], [1043, 1216], [1037, 1264], [1042, 1299], [1033, 1330], [1013, 1376], [981, 1369], [978, 1362], [989, 1351], [847, 1349], [860, 1320], [801, 1338], [718, 1306], [715, 1319], [731, 1326], [733, 1349], [651, 1376], [634, 1332], [587, 1329], [587, 1195], [642, 1122]
+    ], { color: "blue", weight: 2, fillOpacity: 0.2 })
+      .bindPopup("<b><a href='svardey/svardey.html'>tbd</a></b>");
+    politicalLayer.addLayer(tbd);
 
     // Example climate markers (only for Temperature map)
     const ecoldZone = L.marker([218, 1180], {
