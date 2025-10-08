@@ -67,9 +67,9 @@
     // Towns
     const towns = [
       { name: "Leidarhof", coords: [750, 615], url: "leidarhof.html" },
-      { name: "Austasta", coords: [1042, 1369], url: ".html" },
-      { name: "Fjallska", coords: [1245, 1004], url: ".html" },
-      { name: "Tanni", coords: [1210, 468], url: ".html" },
+      { name: "Austrasta", coords: [1042, 1369], url: "austrasta.html" },
+      { name: "Fjallska", coords: [1245, 1004], url: "fjallska.html" },
+      { name: "Tanni", coords: [1210, 468], url: "tanni.html" },
       { name: "Holdstig", coords: [743, 493], url: "holdstig.html" }
     ];
     towns.forEach(town => {
@@ -80,21 +80,21 @@
 
     // Hamlets
     const hamlets = [
-      { name: "tbd", coords: [297, 763], url: ".html" },
-      { name: "tbd", coords: [634, 856], url: ".html" },
-      { name: "tbd", coords: [986, 1150], url: ".html" },
-      { name: "tbd", coords: [723, 1158], url: ".html" },
-      { name: "tbd", coords: [1222, 1253], url: ".html" },
-      { name: "tbd", coords: [1625, 1400], url: ".html" },
-      { name: "tbd", coords: [1633, 1651], url: ".html" },
-      { name: "tbd", coords: [1672, 1176], url: ".html" },
-      { name: "tbd", coords: [1540, 1042], url: ".html" },
-      { name: "tbd", coords: [1652, 757], url: ".html" },
-      { name: "tbd", coords: [951, 603], url: ".html" }
+      { name: "tbd", coords: [297, 763], },
+      { name: "tbd", coords: [634, 856], },
+      { name: "tbd", coords: [986, 1150], },
+      { name: "tbd", coords: [723, 1158], },
+      { name: "tbd", coords: [1222, 1253], },
+      { name: "tbd", coords: [1625, 1400], },
+      { name: "tbd", coords: [1633, 1651], },
+      { name: "tbd", coords: [1672, 1176], },
+      { name: "tbd", coords: [1540, 1042], },
+      { name: "tbd", coords: [1652, 757], },
+      { name: "tbd", coords: [951, 603], }
     ];
     hamlets.forEach(h => {
       const marker = L.marker(h.coords, { icon: invisibleIcon })
-        .bindPopup(`<a class='popup-link' href='${h.url}'>${h.name}</a>`);
+        .bindPopup(`<a class='popup'>${h.name}</a>`);
       hamletLayer.addLayer(marker);
     });
 
