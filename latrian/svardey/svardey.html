@@ -1,33 +1,67 @@
+<!doctype html>
 <html>
 <head>
-  <title>Svardey</title>
   <meta charset="utf-8" />
+  <title>Svardey</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="../../map-base.css">
   <link rel="stylesheet" href="../../map-ui.css">
   <link rel="stylesheet" href="../../map-layers.css">
-
-  <style>
-  
-  </style>
 </head>
 <body>
   <div id="map"></div>
+
   <div id="coords" style="position: fixed; bottom: 10px; left: 10px; color: white; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; font-family: monospace; z-index: 1000;"></div>
 
-  <div id="map"></div>
   <div class="info-box" id="infoBox">
     <h3>Svardey</h3>
     <p>
-      svardey Info
+    Population: ~26,100 
+    <br>
+    <br> 
+    Size: 8762 km2 
+    <br>
+    <br> 
+    Location: Isolated island south of the mainland Latrian peninsula 
+    <br>
+    <br> 
+    Description: Sverday is a bleak, frozen island where wind, sea, and stone shape every life. The land is torn between volcanic highlands and frost-choked valleys, its coasts ringed with jagged cliffs and icebound fjords. Despite its isolation, Sverday endures - its people hardened by the cold, bound by community, and trained in endurance rather than expansion. 
+    <br>
+    <br> 
+    Climate: Sub-polar and severe. Winters plunge below −16 °C, while short summers rarely rise above 5 °C. Sudden snow squalls and sea fogs are common even in thaw season. 
+    <br>
+    <br> 
+    Economy: Currency exists but holds little meaning - trade runs on barter and trust. Whaling, timber cutting, and the hiring of Sverdan mercenaries sustain the island’s contacts with foreign traders during the brief ice-free months. 
+    <br>
+    <br>
+    GDP: 63,250 GC
+    <br>
+    GDP per capita: 2.4 GC 
+    <br>
+    (1 Gold Coin = $585)
+    <br>
+    <br>
+    Military: Five functional forts ring the island, stocked and ready though seldom fully manned. They serve as beast shelters, signal points, and last refuges during invasion. Old, ruined fortresses from colder centuries mark the interior. The military consists of Framfy, who serve as guards in Svardey. The Framfy are extremly skilled soldiers who wear simple chain mail, padds and a vandel helm
+    <br>
+    <br>
+    Culture: Sverday’s people live by self-reliance, loyalty, and endurance. Music is rare, but stories are carved into wood or sung by firelight during the long nights. Their faiths and traditions are old, rooted in the land and sea rather than distant gods. 
+    <br>
+    <br> 
+    Government: Althing; Each city holds a þing (council) of Skrifs, each þing serves the Stróþing located in Holdstig
+    <br>
+    <br> 
+    Exports: Whale oil, cured fish, timber, fine tools, and mercenary contracts. 
+    <br>
+    <br> 
+    Symbol & Colors: The national hues are ash grey and deep blue, representing the basalt cliffs and the surrounding sea - endurance against the cold and the vastness of isolation.
     </p>
   </div>
-  
+
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-
+    // map setup
     const mapWidth = 2048;
     const mapHeight = 2048;
     const bounds = [[0, 0], [mapHeight, mapWidth]];
@@ -39,6 +73,7 @@
       maxBoundsViscosity: 1.0
     }).fitBounds(bounds);
 
+    // coords display
     map.on('mousemove', e => {
       const coordDiv = document.getElementById('coords');
       const x = Math.round(e.latlng.lng);
@@ -46,14 +81,19 @@
       coordDiv.innerHTML = `X: ${x}, Y: ${y}`;
     });
 
+    // base images (paths relative to this file)
     const blank = L.imageOverlay('../../images/latrian/svardey/svardey.jpg', bounds).addTo(map);
     const temperature = L.imageOverlay('../../images/latrian/svardey/svardey_temperture.jpg', bounds);
 
     const baseMaps = {
       "Blank": blank,
-      "Temperature": temperature,
+      "Temperature": temperature
     };
 
+    // single control (only one)
+    L.control.layers(baseMaps, null).addTo(map);
+
+    // info / invisible markers
     const invisibleIcon = L.divIcon({
       className: 'invisible-marker',
       iconSize: [25, 25],
@@ -63,6 +103,7 @@
     const townLayer = L.layerGroup();
     const hamletLayer = L.layerGroup();
     const fortressLayer = L.layerGroup();
+    const temperatureLayer = L.layerGroup();
 
     // Towns
     const towns = [
@@ -80,21 +121,21 @@
 
     // Hamlets
     const hamlets = [
-      { name: "tbd", coords: [297, 763], },
-      { name: "tbd", coords: [634, 856], },
-      { name: "tbd", coords: [986, 1150], },
-      { name: "tbd", coords: [723, 1158], },
-      { name: "tbd", coords: [1222, 1253], },
-      { name: "tbd", coords: [1625, 1400], },
-      { name: "tbd", coords: [1633, 1651], },
-      { name: "tbd", coords: [1672, 1176], },
-      { name: "tbd", coords: [1540, 1042], },
-      { name: "tbd", coords: [1652, 757], },
-      { name: "tbd", coords: [951, 603], }
+      { name: "Kaldstaðr", coords: [297, 763] },
+      { name: "Snæbýli", coords: [634, 856] },
+      { name: "Ktokkar", coords: [986, 1150] },
+      { name: "Fundr Havla", coords: [723, 1158] },
+      { name: "Vatnabær", coords: [1222, 1253] },
+      { name: "Gamall", coords: [1625, 1400] },
+      { name: "Veiðar", coords: [1633, 1651] },
+      { name: "Fjallþjóðir", coords: [1672, 1176] },
+      { name: "Þrjár Brýr", coords: [1540, 1042] },
+      { name: "Norðrhald", coords: [1652, 757] },
+      { name: "Gakk Hjá", coords: [951, 603] }
     ];
     hamlets.forEach(h => {
       const marker = L.marker(h.coords, { icon: invisibleIcon })
-        .bindPopup(`<a class='popup'>${h.name}</a>`);
+        .bindPopup(`<a class='popup-link'>${h.name}</a>`);
       hamletLayer.addLayer(marker);
     });
 
@@ -113,69 +154,153 @@
       fortressLayer.addLayer(marker);
     });
 
-    L.control.layers(baseMaps, {}).addTo(map);
+    map.addLayer(hamletLayer);
+    map.addLayer(townLayer);
+    map.addLayer(fortressLayer);
 
-      map.addLayer(hamletLayer);
-      map.addLayer(townLayer);
-      map.addLayer(fortressLayer);
+    // Temperature markers
+    const ecoldZone = L.marker([319, 930], {
+      icon: L.divIcon({
+        className: 'temp-label',
+        html: '-10°C',
+        iconSize: [50, 20],
+        iconAnchor: [25, 10]
+      })
+    });
+    const mcoldZone = L.marker([994, 845], {
+      icon: L.divIcon({
+        className: 'temp-label',
+        html: '-23°C',
+        iconSize: [50, 20],
+        iconAnchor: [25, 10]
+      })
+    });
+    const emcoldZone = L.marker([1398, 1121], {
+      icon: L.divIcon({
+        className: 'temp-label',
+        html: '-31°C',
+        iconSize: [50, 20],
+        iconAnchor: [25, 10]
+      })
+    });
+    const tecoldZone = L.marker([514, 787], {
+      icon: L.divIcon({
+        className: 'temp-label',
+        html: '-3°C',
+        iconSize: [50, 20],
+        iconAnchor: [25, 10]
+      })
+    });
+    const ncoldCoords = [
+      [1040, 438],
+      [1219, 457],
+      [1359, 890],
+      [1576, 619],
+      [1786, 1499],
+      [1750, 726]
+    ];
+    ncoldCoords.forEach(coord => {
+      const n = L.marker(coord, {
+        icon: L.divIcon({
+          className: 'temp-label',
+          html: '5°C',
+          iconSize: [50, 20],
+          iconAnchor: [25, 10]
+        })
+      });
+      temperatureLayer.addLayer(n);
+    });
+    const kccoldCoords = [
+      [774, 1096],
+      [1272, 994],
+      [1322, 1414],
+      [702, 640]
+    ];
+    kccoldCoords.forEach(coord => {
+      const m = L.marker(coord, {
+        icon: L.divIcon({
+          className: 'temp-label',
+          html: '0°C',
+          iconSize: [50, 20],
+          iconAnchor: [25, 10]
+        })
+      });
+      temperatureLayer.addLayer(m);
+    });
+    const ccoldCoords = [
+      [966, 624],
+      [1650, 958],
+      [1404, 1628],
+      [1044, 1082]
+    ];
+    ccoldCoords.forEach(coord => {
+      const c = L.marker(coord, {
+        icon: L.divIcon({
+          className: 'temp-label',
+          html: '2°C',
+          iconSize: [50, 20],
+          iconAnchor: [25, 10]
+        })
+      });
+      temperatureLayer.addLayer(c);
+    });
 
-      map.on('baselayerchange', function(e) {
+    temperatureLayer.addLayer(ecoldZone);
+    temperatureLayer.addLayer(mcoldZone);
+    temperatureLayer.addLayer(emcoldZone);
+    temperatureLayer.addLayer(tecoldZone);
+
+    // unified baselayerchange handler
+    map.on('baselayerchange', function(e) {
+      // remove everything first
       map.removeLayer(hamletLayer);
       map.removeLayer(townLayer);
       map.removeLayer(fortressLayer);
+      map.removeLayer(temperatureLayer);
 
-    if (e.name === "Blank") {
-      map.addLayer(hamletLayer);
-      map.addLayer(townLayer);
-      map.addLayer(fortressLayer);
+      if (e.name === "Blank") {
+        map.addLayer(hamletLayer);
+        map.addLayer(townLayer);
+        map.addLayer(fortressLayer);
+      } else if (e.name === "Temperature") {
+        map.addLayer(temperatureLayer);
       }
     });
 
+    // Info control (keeps button in control area and toggles infoBox)
     const InfoControl = L.Control.extend({
       onAdd: function() {
-    const btn = L.DomUtil.create('button', 'info-toggle-btn');
-      btn.innerHTML = 'ℹ️ Info';
+        const btn = L.DomUtil.create('button', 'info-toggle-btn');
+        btn.innerHTML = 'ℹ️ Info';
+        L.DomEvent.disableClickPropagation(btn);
+        btn.onclick = function() {
+          const box = document.getElementById('infoBox');
+          box.classList.toggle('open'); // uses your CSS .info-box.open rules
+        };
+        return btn;
+      },
+      onRemove: function() {}
+    });
+    new InfoControl({ position: 'topright' }).addTo(map);
 
-   
-    L.DomEvent.disableClickPropagation(btn);
-
-    btn.onclick = function() {
-    const box = document.getElementById('infoBox');
-    box.classList.toggle('open');
-    };
-    return btn;
-  },
-  onRemove: function() {}
-});
-
-new InfoControl({ position: 'topright' }).addTo(map);
-
-// --- Go Back Button Control ---
-const BackButton = L.Control.extend({
-  onAdd: function() {
-    const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
-    const btn = L.DomUtil.create('button', 'back-button', container);
-    btn.innerHTML = '⬅️ Back';
-    btn.title = 'Return to previous map';
-
-    // Prevent map drag when clicking
-    L.DomEvent.disableClickPropagation(btn);
-
-    // Set your custom back target here (relative or absolute URL)
-    const previousMapURL = '../latrian.html'; // <-- change manually per map
-
-    btn.onclick = function(e) {
-      e.stopPropagation();
-      window.location.href = previousMapURL;
-    };
-
-    return container;
-  },
-  onRemove: function() {}
-});
-
-// Add it to top-left next to zoom controls
-new BackButton({ position: 'topleft' }).addTo(map);
+    // Back button control
+    const BackButton = L.Control.extend({
+      onAdd: function() {
+        const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+        const btn = L.DomUtil.create('button', 'back-button', container);
+        btn.innerHTML = '⬅️ Back';
+        btn.title = 'Return to previous map';
+        L.DomEvent.disableClickPropagation(btn);
+        const previousMapURL = '../latrian.html';
+        btn.onclick = function(e) {
+          e.stopPropagation();
+          window.location.href = previousMapURL;
+        };
+        return container;
+      },
+      onRemove: function() {}
+    });
+    new BackButton({ position: 'topleft' }).addTo(map);
 
   </script>
 </body>

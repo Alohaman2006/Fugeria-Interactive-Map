@@ -34,11 +34,24 @@
 }
 
 .info-box.open {
-  max-height: 400px;
+  max-height: 400px;      /* expand area */
   opacity: 1;
   padding: 12px 16px;
   pointer-events: auto;
-  z-index: 998; /* BELOW button but above map */
+  z-index: 998;           /* BELOW button but above map */
+  overflow-y: auto;        /* ✅ enables scrolling when content is long */
+}
+
+/* Scrollbar styling (optional but looks better) */
+.info-box.open::-webkit-scrollbar {
+  width: 8px;
+}
+.info-box.open::-webkit-scrollbar-thumb {
+  background-color: rgba(120,120,120,0.6);
+  border-radius: 6px;
+}
+.info-box.open::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(160,160,160,0.8);
 }
 
 .info-toggle-btn {
