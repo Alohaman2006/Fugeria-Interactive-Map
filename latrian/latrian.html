@@ -57,17 +57,23 @@
       .bindPopup("<b><a href='svardey/svardey.html'>Svardey</a></b>");
     politicalLayer.addLayer(svardey);
 
-        const tbd = L.polygon([
+    const tbd = L.polygon([
       [697, 1110], [727, 1121], [740, 1152], [759, 1135], [835, 1144], [833, 1201], [875, 1211], [893, 1230], [934, 1173], [954, 1177], [966, 1151], [1015, 1143], [1043, 1142], [1043, 1216], [1037, 1264], [1042, 1299], [1033, 1330], [1013, 1376], [981, 1369], [978, 1362], [989, 1351], [847, 1349], [860, 1320], [801, 1338], [718, 1306], [715, 1319], [731, 1326], [733, 1349], [651, 1376], [634, 1332], [587, 1329], [587, 1195], [642, 1122]
     ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
       .bindPopup("<b><a href='svardey/svardey.html'>tbd</a></b>");
     politicalLayer.addLayer(tbd);
 
+    const tbdd = L.polygon([
+      [1618, 1104], [1644, 1099], [1669, 1124], [1673, 1147], [1717, 1185], [1743, 1217], [1767, 1210], [1772, 1208], [1795, 1227], [1808, 1329], [1786, 1363], [1788, 1365], [1749, 1362], [1725, 1298], [1697, 1303], [1650, 1257], [1620, 1258], [1656, 1158], [1644, 1133],
+    ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
+      .bindPopup("<b><a href='svardey/svardey.html'>tbd</a></b>");
+    politicalLayer.addLayer(tbdd);
+
     // Example climate markers (only for Temperature map)
     const ecoldZone = L.marker([218, 1180], {
       icon: L.divIcon({
         className: 'temp-label',
-        html: '-23°C',
+        html: '-15°C',
         iconSize: [50, 20],
         iconAnchor: [25, 10]
       })
@@ -75,7 +81,7 @@
     const lcoldZone = L.marker([370, 1154], {
       icon: L.divIcon({
         className: 'temp-label',
-        html: '-11°C',
+        html: '5°C',
         iconSize: [50, 20],
         iconAnchor: [25, 10]
         })
@@ -83,7 +89,7 @@
     const mcoldZone = L.marker([892, 1111], {
       icon: L.divIcon({
         className: 'temp-label',
-        html: '-4°C',
+        html: '7°C',
         iconSize: [50, 20],
         iconAnchor: [25, 10]
         })
@@ -91,7 +97,7 @@
     const coldZone = L.marker([1555, 1070], {
       icon: L.divIcon({
         className: 'temp-label',
-        html: '2°C',
+        html: '9°C',
         iconSize: [50, 20],
         iconAnchor: [25, 10]
       })
@@ -99,7 +105,7 @@
     const scoldZone = L.marker([2000, 738], {
       icon: L.divIcon({
         className: 'temp-label',
-        html: '4°C',
+        html: '12°C',
         iconSize: [50, 20],
         iconAnchor: [25, 10]
         })
