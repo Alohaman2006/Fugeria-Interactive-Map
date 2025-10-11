@@ -1,0 +1,97 @@
+<html>
+<head>
+  <title>Lochdun</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../map-base.css">
+  <link rel="stylesheet" href="../../map-ui.css">
+  <style>
+  
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div class="info-box" id="infoBox">
+    <h3>Major City – Lochdun</h3>
+    <p>
+    Population: 10,306
+    <br>
+    <br>
+    Role: Trade heart of the south western part of Cathracha
+    <br>
+    <br>
+    Description: Built upon low stone terraces rising from the lakeshore, Lochdun is a city of narrow lanes, high walls, and timber roofs streaked dark with rain. Barges and riverboats crowd its quays, carrying grain, cloth, and ironwork from the inland towns. The lake’s mist often rolls through the streets, giving the city a pale, half-dreamed look at dawn. Despite its modest size, Lochdun feels alive — a place of bargaining voices, hammer strikes from riverside forges, and the sound of bells calling merchants to the day’s first trade.
+    The people are practical and proud of their reputation for fairness in trade. When disputes between cities arise, they are often brought to Lochdun first, for its elders are known to settle matters without blood.
+    <br>
+    <br>
+    Notable Features: Large docks, large roads
+    </p>
+  </div>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+
+    const mapWidth = 9600;
+    const mapHeight = 5400;
+    const bounds = [[0, 0], [mapHeight, mapWidth]];
+    const map = L.map('map', {
+      crs: L.CRS.Simple,
+      minZoom: -2,
+      maxZoom: 3,
+      maxBounds: bounds,
+      maxBoundsViscosity: 1.0
+    }).fitBounds(bounds);
+
+    const blank = L.imageOverlay('../../images/latrian/cathracha/lochdun.jpg', bounds).addTo(map);
+
+    const InfoControl = L.Control.extend({
+      onAdd: function() {
+    const btn = L.DomUtil.create('button', 'info-toggle-btn');
+      btn.innerHTML = 'ℹ️ Info';
+
+   
+    L.DomEvent.disableClickPropagation(btn);
+
+    btn.onclick = function() {
+    const box = document.getElementById('infoBox');
+    box.classList.toggle('open');
+    };
+    return btn;
+  },
+  onRemove: function() {}
+});
+
+new InfoControl({ position: 'topright' }).addTo(map);
+
+// --- Go Back Button Control ---
+const BackButton = L.Control.extend({
+  onAdd: function() {
+    const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+    const btn = L.DomUtil.create('button', 'back-button', container);
+    btn.innerHTML = '⬅️ Back';
+    btn.title = 'Return to previous map';
+
+    // Prevent map drag when clicking
+    L.DomEvent.disableClickPropagation(btn);
+
+    // Set your custom back target here (relative or absolute URL)
+    const previousMapURL = 'cathracha.html'; // <-- change manually per map
+
+    btn.onclick = function(e) {
+      e.stopPropagation();
+      window.location.href = previousMapURL;
+    };
+
+    return container;
+  },
+  onRemove: function() {}
+});
+
+// Add it to top-left next to zoom controls
+new BackButton({ position: 'topleft' }).addTo(map);
+
+    
+  </script>
+</body>
+</html>
