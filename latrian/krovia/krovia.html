@@ -1,0 +1,252 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Krovia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../map-base.css">
+  <link rel="stylesheet" href="../../map-ui.css">
+  <link rel="stylesheet" href="../../map-layers.css">
+</head>
+<body>
+  <div id="map"></div>
+
+  <div id="coords" style="position: fixed; bottom: 10px; left: 10px; color: white; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; font-family: monospace; z-index: 1000;"></div>
+
+  <div class="info-box" id="infoBox">
+    <h3>Krovia</h3>
+    <p>
+    Population:
+    <br>
+    <br> 
+    Size:
+    <br>
+    <br> 
+    Location:
+    <br>
+    <br> 
+    Description: 
+    <br>
+    <br> 
+    Climate: 
+    <br>
+    <br> 
+    Economy:
+    <br>
+    <br>
+    GDP:
+    <br>
+    GDP per capita:
+    <br>
+    (1 Gold Coin = $585)
+    <br>
+    <br>
+    Military:
+    <br>
+    <br>
+    Culture:
+    <br> 
+    Government: 
+    <br>  
+    Exports:
+    <br>
+    <br>   
+    Symbol & Colors:
+    <img src="../../images/latrian/krovia/flag_krovia.png" alt="Flag Krovia"  style="width:274px;height:334px;">
+  </p>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // map setup
+    const mapWidth = 2048;
+    const mapHeight = 1366;
+    const bounds = [[0, 0], [mapHeight, mapWidth]];
+    const map = L.map('map', {
+      crs: L.CRS.Simple,
+      minZoom: 0,
+      maxZoom: 4,
+      maxBounds: bounds,
+      maxBoundsViscosity: 1.0
+    }).fitBounds(bounds);
+
+    // coords display
+    map.on('mousemove', e => {
+      const coordDiv = document.getElementById('coords');
+      const x = Math.round(e.latlng.lng);
+      const y = Math.round(e.latlng.lat);
+      coordDiv.innerHTML = `X: ${x}, Y: ${y}`;
+    });
+
+    // base images (paths relative to this file)
+    const blank = L.imageOverlay('../../images/latrian/krovia/krovia.jpg', bounds).addTo(map);
+    const temperature = L.imageOverlay('../../images/latrian/krovia/krovia_temperture.jpg', bounds);
+
+    const baseMaps = {
+      "Blank": blank,
+      "Temperature": temperature
+    };
+
+    // single control (only one)
+    L.control.layers(baseMaps, null).addTo(map);
+
+    // info / invisible markers
+    const invisibleIcon = L.divIcon({
+      className: 'invisible-marker',
+      iconSize: [25, 25],
+      iconAnchor: [12, 12]
+    });
+
+    const townLayer = L.layerGroup();
+    const citiesLayer = L.layerGroup();
+    const temperatureLayer = L.layerGroup();
+
+    // Towns
+    const towns = [
+      { name: "Clachoir", coords: [680, 327], url: ".html" },
+      { name: "Tùrainn", coords: [424, 409], url: ".html" },
+      { name: "Gabhoir", coords: [356, 562], url: ".html" },
+      { name: "Beanntraigh", coords: [519, 1004], url: ".html" },
+      { name: "Drochaid", coords: [527, 1309], url: ".html" },
+      { name: "Mòineach", coords: [722, 822], url: ".html" },
+      { name: "Ardail", coords: [806, 1285], url: ".html" }
+    ];
+    towns.forEach(town => {
+      const marker = L.marker(town.coords, { icon: invisibleIcon })
+        .bindPopup(`<a class='popup-link' href='${town.url}'>${town.name}</a>`);
+      townLayer.addLayer(marker);
+    });
+
+    // Cities
+    const cities = [
+      { name: "Lochdun", coords: [351, 724], url: "lochdun.html" },
+      { name: "Raoinand", coords: [743, 674], url: ".html" },
+      { name: "Meadhan", coords: [659, 1077], url: ".html" },
+      { name: "Sàbhailte", coords: [939, 1453], url: ".html" },
+      { name: "Baile-mòr", coords: [720, 1831], url: ".html" },
+    ];
+    cities.forEach(f => {
+      const marker = L.marker(f.coords, { icon: invisibleIcon })
+        .bindPopup(`<a class='popup-link' href='${f.url}'>${f.name}</a>`);
+      citiesLayer.addLayer(marker);
+    });
+
+    map.addLayer(townLayer);
+    map.addLayer(citiesLayer);
+
+    // Temperature markers
+    const tecoldZone = L.marker([591, 1166], {
+      icon: L.divIcon({
+        className: 'temp-label',
+        html: '5°C',
+        iconSize: [50, 20],
+        iconAnchor: [25, 10]
+      })
+    });
+    const ncoldCoords = [
+      [855, 361],
+      [378, 230],
+      [1229, 347]
+    ];
+    ncoldCoords.forEach(coord => {
+      const n = L.marker(coord, {
+        icon: L.divIcon({
+          className: 'temp-label',
+          html: '-16°C',
+          iconSize: [50, 20],
+          iconAnchor: [25, 10]
+        })
+      });
+      temperatureLayer.addLayer(n);
+    });
+    const kccoldCoords = [
+      [567, 344],
+      [671, 1477],
+      [1197, 994]
+    ];
+    kccoldCoords.forEach(coord => {
+      const m = L.marker(coord, {
+        icon: L.divIcon({
+          className: 'temp-label',
+          html: '3°C',
+          iconSize: [50, 20],
+          iconAnchor: [25, 10]
+        })
+      });
+      temperatureLayer.addLayer(m);
+    });
+    const ccoldCoords = [
+      [360, 1051],
+      [725, 856],
+      [768, 1970]
+    ];
+    ccoldCoords.forEach(coord => {
+      const c = L.marker(coord, {
+        icon: L.divIcon({
+          className: 'temp-label',
+          html: '7°C',
+          iconSize: [50, 20],
+          iconAnchor: [25, 10]
+        })
+      });
+      temperatureLayer.addLayer(c);
+    });
+
+    temperatureLayer.addLayer(tecoldZone);
+
+    // unified baselayerchange handler
+    map.on('baselayerchange', function(e) {
+      // remove everything first
+      map.removeLayer(townLayer);
+      map.removeLayer(citiesLayer);
+      map.removeLayer(temperatureLayer);
+
+      if (e.name === "Blank") {
+        map.addLayer(hamletLayer);
+        map.addLayer(townLayer);
+        map.addLayer(fortressLayer);
+      } else if (e.name === "Temperature") {
+        map.addLayer(temperatureLayer);
+      }
+    });
+
+    // Info control (keeps button in control area and toggles infoBox)
+    const InfoControl = L.Control.extend({
+      onAdd: function() {
+        const btn = L.DomUtil.create('button', 'info-toggle-btn');
+        btn.innerHTML = 'ℹ️ Info';
+        L.DomEvent.disableClickPropagation(btn);
+        btn.onclick = function() {
+          const box = document.getElementById('infoBox');
+          box.classList.toggle('open'); // uses your CSS .info-box.open rules
+        };
+        return btn;
+      },
+      onRemove: function() {}
+    });
+    new InfoControl({ position: 'topright' }).addTo(map);
+
+    // Back button control
+    const BackButton = L.Control.extend({
+      onAdd: function() {
+        const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+        const btn = L.DomUtil.create('button', 'back-button', container);
+        btn.innerHTML = '⬅️ Back';
+        btn.title = 'Return to previous map';
+        L.DomEvent.disableClickPropagation(btn);
+        const previousMapURL = '../latrian.html';
+        btn.onclick = function(e) {
+          e.stopPropagation();
+          window.location.href = previousMapURL;
+        };
+        return container;
+      },
+      onRemove: function() {}
+    });
+    new BackButton({ position: 'topleft' }).addTo(map);
+
+  </script>
+</body>
+</html>
