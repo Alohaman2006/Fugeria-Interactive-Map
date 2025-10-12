@@ -18,42 +18,48 @@
   <div class="info-box" id="infoBox">
     <h3>Krovia</h3>
     <p>
-    Population:
+    Population: ~44,693
     <br>
     <br> 
-    Size:
+    Size: ~4021 km2
     <br>
     <br> 
-    Location:
+    Location: Northeastern Latrian Peninsula
     <br>
     <br> 
-    Description: 
+    Description: Krovia is a land of twilight and endurance - Among the realms in Latria its among the oldest. 
+    Its people speak in slow, old dialects of the Krovian Tongue and keep strict customs of invitation, hearth, and light. 
+    By night the hilltop keeps awaken: crimson banners flutter, and courtly processions of vampires oversee governance. 
+    By day, the mortal steward and the dьnь-sǫdъ manage trade, law, and diplomacy.
     <br>
     <br> 
-    Climate: 
+    Climate: Sub-arctic maritime - short, cool summers (~7 °C average), long winters heavy with snow and sea-fog. The coasts remain ice-free due to warm currents, but inland valleys freeze for months.
     <br>
     <br> 
-    Economy:
+    Economy: Small but efficient, rooted in crafts, metalwork, and trade. The undead nobility favor long-lasting artistry: silver filigree, black-iron armory, fine glass, and dyed cloth. Mortals farm hardy grains and herd reindeer and shaggy oxen. Coastal towns export salt-fish, fur, and iron goods. Vampiric courts quietly fund mercantile ventures through mortal fronts.
     <br>
     <br>
-    GDP:
+    GDP: 683,910 GC
     <br>
-    GDP per capita:
+    GDP per capita: 15.3 GC
     <br>
     (1 Gold Coin = $585)
     <br>
     <br>
-    Military:
+    Military: Small, disciplined, and old. The čьrmnogardъ (vampiric knights and retainers) command mortal levies. Few in number but unmatched in night warfare and fort defense. Coastal watchtowers maintain signal-fires, and a modest fleet of black-hulled cutters patrols the Sea.
     <br>
     <br>
-    Culture:
+    Culture: Krovias people are reverent of hearth spirits, oaths, and ancestors. Common folk fear but respect their “nъťь-vladъje.” Superstitions run deep: mirrors are covered at dusk, and candles burn red wax during winter. Despite the vampiric rulers, art and song flourish - ballads of longing, endurance, and cold beauty fill the taverns.
+    <br>
     <br> 
-    Government: 
+    Government: Noctarchatenal Monarchy ; A feudal monarchy ruled by vampiric nobility. The reigning Noctarch (High Lord or Lady) presides from the capital citadel.
+    A mortal dьnь-vladъka, elected from selected and loyal mortal families, administers by daylight. Mortals may serve as mayors or scribes, but true power remains in the nocturnal courts.
+    <br>
     <br>  
-    Exports:
+    Exports: Refined silver and black-iron weapons, Fine dyed fabrics and glassware, Salted fish and furs, Alchemical reagents (notably “Red Mercury”), Rare wines and preserved blood-tonics (for export to other vampiric houses)
     <br>
     <br>   
-    Symbol & Colors:
+    Symbol & Colors: Silver - eternity and moonlight, Deep Blue - the night sea surrounding Krovia, Crimson - life’s blood, and the hidden power sustaining the realm
     <img src="../../images/latrian/krovia/flag_krovia.png" alt="Flag Krovia"  style="width:274px;height:334px;">
   </p>
   </div>
@@ -62,11 +68,11 @@
   <script>
     // map setup
     const mapWidth = 2048;
-    const mapHeight = 1366;
+    const mapHeight = 2048;
     const bounds = [[0, 0], [mapHeight, mapWidth]];
     const map = L.map('map', {
       crs: L.CRS.Simple,
-      minZoom: 0,
+      minZoom: -1,
       maxZoom: 4,
       maxBounds: bounds,
       maxBoundsViscosity: 1.0
@@ -81,7 +87,7 @@
     });
 
     // base images (paths relative to this file)
-    const blank = L.imageOverlay('../../images/latrian/krovia/krovia.jpg', bounds).addTo(map);
+    const blank = L.imageOverlay('../../images/latrian/krovia/krovia.webp', bounds).addTo(map);
     const temperature = L.imageOverlay('../../images/latrian/krovia/krovia_temperture.jpg', bounds);
 
     const baseMaps = {
@@ -105,13 +111,11 @@
 
     // Towns
     const towns = [
-      { name: "Clachoir", coords: [680, 327], url: ".html" },
-      { name: "Tùrainn", coords: [424, 409], url: ".html" },
-      { name: "Gabhoir", coords: [356, 562], url: ".html" },
-      { name: "Beanntraigh", coords: [519, 1004], url: ".html" },
-      { name: "Drochaid", coords: [527, 1309], url: ".html" },
-      { name: "Mòineach", coords: [722, 822], url: ".html" },
-      { name: "Ardail", coords: [806, 1285], url: ".html" }
+      { name: "1", coords: [716, 1245], url: ".html" },
+      { name: "2", coords: [875, 564], url: ".html" },
+      { name: "3", coords: [1124, 1243], url: ".html" },
+      { name: "4", coords: [1623, 1104], url: ".html" },
+      { name: "5", coords: [1718, 1732], url: ".html" },
     ];
     towns.forEach(town => {
       const marker = L.marker(town.coords, { icon: invisibleIcon })
@@ -119,22 +123,7 @@
       townLayer.addLayer(marker);
     });
 
-    // Cities
-    const cities = [
-      { name: "Lochdun", coords: [351, 724], url: "lochdun.html" },
-      { name: "Raoinand", coords: [743, 674], url: ".html" },
-      { name: "Meadhan", coords: [659, 1077], url: ".html" },
-      { name: "Sàbhailte", coords: [939, 1453], url: ".html" },
-      { name: "Baile-mòr", coords: [720, 1831], url: ".html" },
-    ];
-    cities.forEach(f => {
-      const marker = L.marker(f.coords, { icon: invisibleIcon })
-        .bindPopup(`<a class='popup-link' href='${f.url}'>${f.name}</a>`);
-      citiesLayer.addLayer(marker);
-    });
-
     map.addLayer(townLayer);
-    map.addLayer(citiesLayer);
 
     // Temperature markers
     const tecoldZone = L.marker([591, 1166], {

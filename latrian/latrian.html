@@ -17,6 +17,19 @@
   <div id="map"></div>
   <div id="coords" style="position: fixed; bottom: 10px; left: 10px; color: white; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; font-family: monospace; z-index: 1000;"></div>
   
+  <div class="info-box" id="infoBox">
+    <h3>Latrian Peninsula</h3>
+    <p>
+    Size: ~218,336 km2
+    <br>
+    <br>
+    Scale: 1 : 53 000
+    <br>
+    <br>
+    Nations: 19 Nations ; 7 Landlocked ; 1 Microstate ; 1 Island
+  </p>
+  </div>
+
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
     const mapWidth = 2048;
@@ -66,7 +79,7 @@
     const krovia = L.polygon([
       [1618, 1104], [1644, 1099], [1669, 1124], [1673, 1147], [1717, 1185], [1743, 1217], [1767, 1210], [1772, 1208], [1795, 1227], [1808, 1329], [1786, 1363], [1788, 1365], [1749, 1362], [1725, 1298], [1697, 1303], [1650, 1257], [1620, 1258], [1656, 1158], [1644, 1133],
     ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
-      .bindPopup("<b><a href='svardey/krovia.html'>Krovia</a></b>");
+      .bindPopup("<b><a href='krovia/krovia.html'>Krovia</a></b>");
     politicalLayer.addLayer(krovia);
 
     const cathracha = L.polygon([
@@ -74,6 +87,12 @@
     ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
       .bindPopup("<b><a href='cathracha/cathracha.html'>Cathracha</a></b>");
     politicalLayer.addLayer(cathracha);
+
+    const mic = L.polygon([
+      [1407, 946], [1389, 962], [1419, 975], [1429, 967], 
+    ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
+      .bindPopup("<b><a href='cathracha/cathracha.html'>TBD</a></b>");
+    politicalLayer.addLayer(mic);
 
     // Example climate markers (only for Temperature map)
     const ecoldZone = L.marker([218, 1180], {
@@ -95,7 +114,7 @@
     const mcoldZone = L.marker([892, 1111], {
       icon: L.divIcon({
         className: 'temp-label',
-        html: '7°C',
+        html: '5°C',
         iconSize: [50, 20],
         iconAnchor: [25, 10]
         })
@@ -103,7 +122,7 @@
     const coldZone = L.marker([1555, 1070], {
       icon: L.divIcon({
         className: 'temp-label',
-        html: '9°C',
+        html: '7°C',
         iconSize: [50, 20],
         iconAnchor: [25, 10]
       })
@@ -111,7 +130,7 @@
     const scoldZone = L.marker([2000, 738], {
       icon: L.divIcon({
         className: 'temp-label',
-        html: '12°C',
+        html: '9°C',
         iconSize: [50, 20],
         iconAnchor: [25, 10]
         })
@@ -144,6 +163,21 @@
       }
 
     });
+
+    const InfoControl = L.Control.extend({
+      onAdd: function() {
+        const btn = L.DomUtil.create('button', 'info-toggle-btn');
+        btn.innerHTML = 'ℹ️ Info';
+        L.DomEvent.disableClickPropagation(btn);
+        btn.onclick = function() {
+          const box = document.getElementById('infoBox');
+          box.classList.toggle('open'); // uses your CSS .info-box.open rules
+        };
+        return btn;
+      },
+      onRemove: function() {}
+    });
+    new InfoControl({ position: 'topright' }).addTo(map);
 
   </script>
 </body>
