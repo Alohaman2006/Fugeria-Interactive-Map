@@ -69,6 +69,8 @@
       "Tectonic": tectonic
     };
 
+    L.control.layers(baseMaps, null).addTo(map);
+    
     const InfoControl = L.Control.extend({
       onAdd: function() {
         const btn = L.DomUtil.create('button', 'info-toggle-btn');
