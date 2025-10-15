@@ -8,10 +8,6 @@
   <link rel="stylesheet" href="map-base.css">
   <link rel="stylesheet" href="map-ui.css">
   <link rel="stylesheet" href="map-layers.css">
-
-  <style>
-
-  </style>
 </head>
 <body>
   <div id="map"></div>
@@ -19,8 +15,7 @@
   
   <div class="info-box" id="infoBox">
     <h3>Frexis</h3>
-  If you are not redirected automatically, <a href="latrian/latrian.html">click here</a>.
-  </p>
+    <p>If you are not redirected automatically, <a href="latrian/latrian.html">click here</a>.</p>
   </div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
@@ -36,31 +31,21 @@
       maxBoundsViscosity: 1.0
     }).fitBounds(bounds);
 
+    // Coordinate tracker
     map.on('mousemove', function(e) {
-  const coordDiv = document.getElementById('coords');
-  if (coordDiv) {
-    const x = Math.round(e.latlng.lng);
-    const y = Math.round(e.latlng.lat);
-    coordDiv.innerHTML = `X: ${x}, Y: ${y}`;
-  }
-});
+      const coordDiv = document.getElementById('coords');
+      if (coordDiv) {
+        const x = Math.round(e.latlng.lng);
+        const y = Math.round(e.latlng.lat);
+        coordDiv.innerHTML = `X: ${x}, Y: ${y}`;
+      }
+    });
 
-    
+    // Base map layers
     const blank = L.imageOverlay('images/frexis.webp', bounds).addTo(map);
     const detailed = L.imageOverlay('images/frexis_detail.webp', bounds);
     const temperature = L.imageOverlay('images/frexis_temperture.webp', bounds);
     const tectonic = L.imageOverlay('images/frexis_tectonic.webp', bounds);
-
-    // Overlay groups (info layers)
-    const politicalLayer = L.layerGroup();
-    const temperatureLayer = L.layerGroup();
-
-    // land
-    const svardey = L.polygon([
-      [618, 209], [688, 350], [645, 433], [531, 427], [466, 331], [531, 237]
-    ], { color: "blue", weight: 2, fillOpacity: 0.2 })
-      .bindPopup("<b><a href='svardey/svardey.html'>Svardey</a></b>");
-    politicalLayer.addLayer(svardey);
 
     const baseMaps = {
       "Blank": blank,
@@ -69,8 +54,35 @@
       "Tectonic": tectonic
     };
 
+    // land
+    const latria = L.polygon([
+      [618, 209], [688, 350], [645, 433], [531, 427],
+      [466, 331], [531, 237]
+    ], {
+      color: "blue",
+      weight: 2,
+      fillOpacity: 0.2
+    }).bindPopup("<b><a href='latrian/latrian.html'>Latria</a></b>");
+
+    const landLayer = L.layerGroup([latria]);
+
+    // Add the layer control
     L.control.layers(baseMaps, null).addTo(map);
-    
+
+    // Add political layer to map by default (Blank starts active)
+    map.addLayer(landLayer);
+
+    // Change visibility depending on base map
+    map.on('baselayerchange', function(e) {
+      // Remove first to reset
+      map.removeLayer(landLayer);
+
+      if (e.name === "Blank" || e.name === "Detailed") {
+        map.addLayer(landLayer);
+      }
+    });
+
+    // --- Info Toggle Button ---
     const InfoControl = L.Control.extend({
       onAdd: function() {
         const btn = L.DomUtil.create('button', 'info-toggle-btn');
@@ -78,7 +90,7 @@
         L.DomEvent.disableClickPropagation(btn);
         btn.onclick = function() {
           const box = document.getElementById('infoBox');
-          box.classList.toggle('open'); // uses your CSS .info-box.open rules
+          box.classList.toggle('open');
         };
         return btn;
       },
