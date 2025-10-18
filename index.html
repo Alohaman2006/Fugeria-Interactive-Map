@@ -19,6 +19,19 @@
     <p>If you are not redirected automatically, <a href="latrian/latrian.html">click here</a>.</p>
   </div>
 
+  <div class="info-box" id="tempInfoBox" style="top: 220px;"> 
+    <h3>Temperature Key</h3>
+    <p>
+      <span style="color:#ff7c7c;">🟥 40°C — 60°C</span><br>
+      <span style="color:#e8ae6d;">🟧 20° — 40°C</span><br>
+      <span style="color:#ffee4e;">🟨 10°C — 35°C</span><br>
+      <span style="color:#00ff88;">🟩 0°C — 30°C</span><br>
+      <span style="color:#90d1ff;">🟦 -10°C — 20°C</span><br>
+      <span style="color:#59a5ff;">🟦 -30°C — 10°C</span><br>
+      <span style="color:#b158ff;">🟪 -40°C — 0°C</span>
+    </p>
+  </div>
+
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
     const mapWidth = 2048;
@@ -55,17 +68,28 @@
       "Tectonic": tectonic
     };
 
+    const landLayer = L.layerGroup();
+
     // land
     const latria = L.polygon([
-      [618, 209], [688, 350], [645, 433], [531, 427],
+      [652, 216], [688, 350], [645, 433], [531, 427],
       [466, 331], [531, 237]
     ], {
-      color: "transparent",
+      color: "blue",
       weight: 2,
       fillOpacity: 0.2
     }).bindPopup("<b><a href='latrian/latrian.html'>Latria</a></b>");
+    landLayer.addLayer(latria);
 
-    const landLayer = L.layerGroup([latria]);
+    const unk = L.polygon([
+      [652, 216], [688, 350], [762, 392], [850, 334],
+      [856, 70], [696, 78], [624, 209]
+    ], {
+      color: "blue",
+      weight: 2,
+      fillOpacity: 0.2
+    }).bindPopup("<b><a href='latrian/latrian.html'>test</a></b>");
+    landLayer.addLayer(unk);
 
     // Add the layer control
     L.control.layers(baseMaps, null).addTo(map);
@@ -75,11 +99,19 @@
 
     // Change visibility depending on base map
     map.on('baselayerchange', function(e) {
-      // Remove first to reset
-      map.removeLayer(landLayer);
 
       if (e.name === "Blank" || e.name === "Detailed") {
         map.addLayer(landLayer);
+      }
+
+   document.getElementById('infoBox').classList.remove('open');
+      document.getElementById('tempInfoBox').classList.remove('open');
+
+      if (e.name === "Blank" || e.name === "Detailed") {
+        document.getElementById('infoBox').classList.add('open');
+      } 
+      else if (e.name === "Temperature") {
+        document.getElementById('tempInfoBox').classList.add('open');
       }
     });
 
