@@ -1,0 +1,161 @@
+<html>
+<head>
+  <title>The Map of Frexis</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="map-base.css">
+  <link rel="stylesheet" href="map-ui.css">
+  <link rel="stylesheet" href="map-layers.css">
+</head>
+<body>
+  <div id="map"></div>
+  <div id="coords" style="position: fixed; bottom: 10px; left: 10px; color: white; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; font-family: monospace; z-index: 1000;"></div>  
+  
+  <div class="info-box" id="infoBox">
+    <h3>Frexis</h3>
+    <p>If you are not redirected automatically, <a href="latrian/latrian.html">click here</a>.</p>
+  </div>
+
+  <div class="info-box" id="tempInfoBox" style="top: 220px;"> 
+    <h3>Temperature Key</h3>
+    <p>
+      <span style="color:#ff7c7c;">🟥 40°C — 60°C</span><br>
+      <span style="color:#e8ae6d;">🟧 20° — 40°C</span><br>
+      <span style="color:#ffee4e;">🟨 10°C — 35°C</span><br>
+      <span style="color:#00ff88;">🟩 0°C — 30°C</span><br>
+      <span style="color:#90d1ff;">🟦 -10°C — 20°C</span><br>
+      <span style="color:#59a5ff;">🟦 -30°C — 10°C</span><br>
+      <span style="color:#b158ff;">🟪 -40°C — 0°C</span>
+    </p>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const mapWidth = 2048;
+    const mapHeight = 1764; 
+    const bounds = [[0,0], [mapHeight, mapWidth]];
+    const map = L.map('map', {
+      crs: L.CRS.Simple,
+      minZoom: -1.5,
+      maxZoom: 4,
+      maxBounds: bounds,
+      maxBoundsViscosity: 1.0
+    }).fitBounds(bounds);
+
+    // Coordinate tracker
+    map.on('mousemove', function(e) {
+      const coordDiv = document.getElementById('coords');
+      if (coordDiv) {
+        const x = Math.round(e.latlng.lng);
+        const y = Math.round(e.latlng.lat);
+        coordDiv.innerHTML = `X: ${x}, Y: ${y}`;
+      }
+    });
+
+    // Base map layers
+    const blank = L.imageOverlay('images/frexis.webp', bounds).addTo(map);
+    const detailed = L.imageOverlay('images/frexis_detail.webp', bounds);
+    const temperature = L.imageOverlay('images/frexis_temperture.webp', bounds);
+    const tectonic = L.imageOverlay('images/frexis_tectonic.webp', bounds);
+
+    const baseMaps = {
+      "Blank": blank,
+      "Detailed": detailed,
+      "Temperature": temperature,
+      "Tectonic": tectonic
+    };
+
+    const landLayer = L.layerGroup();
+
+    // land
+    const latria = L.polygon([
+      [652, 216], [688, 350], [645, 433], [531, 427],
+      [466, 331], [531, 237]
+    ], {
+      color: "blue",
+      weight: 2,
+      fillOpacity: 0.2
+    }).bindPopup("<b><a href='latrian/latrian.html'>Latria</a></b>");
+    landLayer.addLayer(latria);
+
+    const unk = L.polygon([
+      [652, 216], [688, 350], [762, 392], [850, 334],
+      [856, 70], [696, 78], [624, 209]
+    ], {
+      color: "blue",
+      weight: 2,
+      fillOpacity: 0.2
+    }).bindPopup("<b><a href='latrian/latrian.html'>test</a></b>");
+    landLayer.addLayer(unk);
+
+    // Add the layer control
+    L.control.layers(baseMaps, null).addTo(map);
+
+    // Add political layer to map by default (Blank starts active)
+    map.addLayer(landLayer);
+
+    // Change visibility depending on base map
+    map.on('baselayerchange', function(e) {
+
+      if (e.name === "Blank" || e.name === "Detailed") {
+        map.addLayer(landLayer);
+      }
+
+   document.getElementById('infoBox').classList.remove('open');
+      document.getElementById('tempInfoBox').classList.remove('open');
+
+      if (e.name === "Blank" || e.name === "Detailed") {
+        document.getElementById('infoBox').classList.add('open');
+      } 
+      else if (e.name === "Temperature") {
+        document.getElementById('tempInfoBox').classList.add('open');
+      }
+    });
+
+    // --- Info Toggle Button ---
+    const InfoControl = L.Control.extend({
+      onAdd: function() {
+        const btn = L.DomUtil.create('button', 'info-toggle-btn');
+        btn.innerHTML = 'ℹ️ Info';
+        L.DomEvent.disableClickPropagation(btn);
+        btn.onclick = function() {
+          const box = document.getElementById('infoBox');
+          box.classList.toggle('open');
+        };
+        return btn;
+      },
+      onRemove: function() {}
+    });
+    new InfoControl({ position: 'topright' }).addTo(map);
+
+    const BackButton = L.Control.extend({
+  onAdd: function() {
+    const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+    const btn = L.DomUtil.create('button', 'back-button', container);
+    btn.innerHTML = '⬅️ Back';
+    btn.title = 'Return to previous map';
+
+    // Prevent map drag when clicking
+    L.DomEvent.disableClickPropagation(btn);
+
+    // Set your custom back target here (relative or absolute URL)
+    const previousMapURL = 'index.html'; // <-- change manually per map
+
+    btn.onclick = function(e) {
+      e.stopPropagation();
+      window.location.href = previousMapURL;
+    };
+
+    return container;
+  },
+  onRemove: function() {}
+});
+
+// Add it to top-left next to zoom controls
+new BackButton({ position: 'topleft' }).addTo(map);
+
+  </script>
+</body>
+</html>
