@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="map-base.css">
-    <link rel="stylesheet" href="map-ui.css">
+    <link rel="stylesheet" href="code/map-base.css">
+    <link rel="stylesheet" href="code/map-ui.css">
     <title>Fugeria</title>
     <style>
       body { margin: 0; overflow: hidden; }
@@ -12,9 +12,9 @@
         position: absolute;
         top: 10px;
         right: 10px;
-        background: #333;
+        background: #000000;
         color: white;
-        border: 1px solid #555;
+        border: 1px solid #000000;
         border-radius: 6px;
         padding: 6px 10px;
         cursor: pointer;
@@ -25,6 +25,23 @@
       }
       .info-toggle-btn:hover {
         background: #555;
+      }
+      #pantheonBtn {
+        position: absolute;
+        top: 10px;
+        left: 10px; /* top-left */
+        background: #000000;
+        color: white;
+        border: 1px solid #000000;
+        border-radius: 6px;
+        padding: 6px 10px;
+        cursor: pointer;
+        font-size: 14px;
+        z-index: 2000;
+      }
+
+      #pantheonBtn:hover {
+        background: #222222;
       }
     </style>
 
@@ -39,10 +56,9 @@
   </head>
 
   <body>
-    <!-- Info button -->
-    <button class="info-toggle-btn" id="infoBtn">ℹ️ Info</button>
+    <button id="pantheonBtn">Pantheon</button>
+    <button class="info-toggle-btn" id="infoBtn">Lands</button>
 
-    <!-- Info box -->
     <div class="info-box" id="infoBox">
       <h3>Fugeria</h3>
       <p>
@@ -51,14 +67,20 @@
       </p>
     </div>
 
-    <script type="module" src="threejs.js"></script>
+    <script type="module" src="code/threejs.js"></script>
 
-    <!-- Toggle behavior -->
     <script>
       document.getElementById("infoBtn").addEventListener("click", function() {
         const box = document.getElementById("infoBox");
         box.classList.toggle("open");
       });
     </script>
+
+    <script>
+document.getElementById("pantheonBtn").addEventListener("click", () => {
+  window.location.href = "pantheon.html";
+});
+</script>
+
   </body>
 </html>

@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="map-base.css">
-  <link rel="stylesheet" href="map-ui.css">
-  <link rel="stylesheet" href="map-layers.css">
+  <link rel="stylesheet" href="code/map-base.css">
+  <link rel="stylesheet" href="code/map-ui.css">
+  <link rel="stylesheet" href="code/map-layers.css">
 </head>
 <body>
   <div id="map"></div>
@@ -21,13 +21,13 @@
   <div class="info-box" id="tempInfoBox" style="top: 220px;"> 
     <h3>Temperature Key</h3>
     <p>
-      <span style="color:#ff7c7c;">🟥 40°C — 60°C</span><br>
-      <span style="color:#e8ae6d;">🟧 20° — 40°C</span><br>
-      <span style="color:#ffee4e;">🟨 10°C — 35°C</span><br>
-      <span style="color:#00ff88;">🟩 0°C — 30°C</span><br>
-      <span style="color:#90d1ff;">🟦 -10°C — 20°C</span><br>
-      <span style="color:#59a5ff;">🟦 -30°C — 10°C</span><br>
-      <span style="color:#b158ff;">🟪 -40°C — 0°C</span>
+      <span style="color:#ff7c7c;">🟥 40°C — 60°C   ( Equatorial )</span><br>
+      <span style="color:#e8ae6d;">🟧 20° — 40°C    ( Tropical )</span><br>
+      <span style="color:#ffee4e;">🟨 10°C — 35°C   ( Subtropical )</span><br>
+      <span style="color:#00ff88;">🟩 0°C — 30°C    ( Warm Temperate )</span><br>
+      <span style="color:#90d1ff;">🟦 -10°C — 20°C  ( Cool Temperate )</span><br>
+      <span style="color:#59a5ff;">🟦 -30°C — 10°C  ( Subarctic )</span><br>
+      <span style="color:#b158ff;">🟪 -40°C — 0°C   ( Arctic )</span>
     </p>
   </div>
 

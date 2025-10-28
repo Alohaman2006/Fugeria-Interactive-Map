@@ -29,19 +29,19 @@ const material = new THREE.MeshPhongMaterial({
 const fugeria = new THREE.Mesh(geometry, material);
 fugGroup.add(fugeria);
 
-//const lightsMat = new THREE.MeshBasicMaterial({
-  //map: loader.load("images/fugeria_night.jpg"),
-  //blending: THREE.AdditiveBlending,
-//});
-//const lightsMesh = new THREE.Mesh(geometry, lightsMat);
-//fugGroup.add(lightsMesh);
+const lightsMat = new THREE.MeshBasicMaterial({
+  map: loader.load("images/fugeria_night.jpg"),
+  blending: THREE.AdditiveBlending,
+});
+const lightsMesh = new THREE.Mesh(geometry, lightsMat);
+fugGroup.add(lightsMesh);
 
 const cloudsMat = new THREE.MeshStandardMaterial({
   map: loader.load("images/clouds.jpg"),
   alphaMap: loader.load("images/cloudmaptrans.jpg"),
   transparent: true,
   depthWrite: false,
-  opacity: 0.2,
+  opacity: 0.3,
 });
 const cloudsMesh = new THREE.Mesh(geometry, cloudsMat);
 cloudsMesh.scale.setScalar(1.003);
@@ -59,14 +59,11 @@ const sunLight = new THREE.DirectionalLight(0xffffff, 2.0);
 sunLight.position.set(-2, 0.5, 1.5);
 scene.add(sunLight);
 
-const ambient = new THREE.AmbientLight(0xffffff, 0.7)
-scene.add(ambient)
-
 function animate() {
   requestAnimationFrame(animate);
 
   fugeria.rotation.y += 0.002;
-  //lightsMesh.rotation.y += 0.002;
+  lightsMesh.rotation.y += 0.002;
   cloudsMesh.rotation.y += 0.0023;
   glowMesh.rotation.y += 0.002;
 

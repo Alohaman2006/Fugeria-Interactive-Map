@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Pantheon</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
+        background-color: #000000;
+        display: flex;
+         flex-direction: column;
+      }
+
+      .gods-columns {
+          display: flex;
+          flex: 1;
+         height: 100%; 
+        background: linear-gradient(to right, rgb(116, 0, 0), rgb(221, 144, 0), rgb(163, 163, 0), rgb(24, 146, 0), rgb(0, 165, 165), rgb(23, 41, 124), rgb(126, 0, 126), rgb(70, 70, 70), rgb(153, 153, 153));
+        position: relative;
+        overflow: visible;
+        }
+
+        .gods-columns::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 20%; 
+          background: linear-gradient(to bottom, rgba(0,0,0,0), #000000);
+          pointer-events: none;
+        }       
+
+        .gods-columns .god {
+          flex: 1; 
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 1.2em;
+          transition: transform 0.3s ease;
+          background-color: transparent;
+          color: white;
+          position: relative;
+          background: transparent;
+          transition: transform 0.3s ease;
+          min-height: 100%;
+        }
+
+        .gods-columns .god:hover {
+          transform: scale(1.05);
+        }
+
+        .god-10 {
+         width: 100%;
+         height: 10%;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         background: rgb(0, 0, 0);
+         color: black;
+         cursor: pointer;
+         font-size: 1.2em;
+         position: relative;     
+         overflow: visible;      
+         will-change: transform;  
+         transform-origin: center; 
+         background-image: radial-gradient(circle, rgba(57, 0, 78, 0.445) 2px, transparent 2px);
+         background-size: 10px 10px;
+         transition: transform 0.3s ease;
+        }
+
+        .god-10:hover {
+         transform: scale(1.05);
+        }
+
+        .god-info-box {
+         position: absolute;
+         inset: 0;
+         width: 100%;
+         height: 100%;
+         background: rgba(0, 0, 0, 0.7);
+         color: white;
+         font-size: 1rem;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         text-align: center;
+         padding: 1em;
+         box-sizing: border-box;
+         opacity: 0;
+         pointer-events: none;
+         transition: opacity 0.3s ease;
+         z-index: 10;
+        }
+
+        .god-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  width: 80%;
+  max-width: 800px;
+}
+
+
+.god-info-box.god-10-layout .god-content {
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: 3em;
+  max-width: 95%;
+}
+
+
+.god-info-box.god-10-layout .text-section {
+  flex: 2;
+  text-align: left;
+  color: #ddd;
+}
+
+.god-info-box.god-10-layout .text-section h1 {
+  text-align: left;
+}
+
+.god-info-box.god-10-layout .details {
+  flex: 1;
+  text-align: left;
+}
+
+
+        .god-info-box.active {
+          opacity: 1;
+          pointer-events: all;
+        }
+
+      #returnPlanet {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #333;
+        color: white;
+        border: 1px solid #555;
+        border-radius: 6px;
+        padding: 6px 10px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <button id="returnPlanet">Return to Fugeria</button>
+
+    <div class="gods-columns">
+    <div class="god" data-god="1">God 1</div>
+    <div class="god" data-god="2">God 2</div>
+    <div class="god" data-god="3">God 3</div>
+    <div class="god" data-god="4">God 4</div>
+    <div class="god" data-god="5">God 5</div>
+    <div class="god" data-god="6">God 6</div>
+    <div class="god" data-god="7">God 7</div>
+    <div class="god" data-god="8">God 8</div>
+    <div class="god" data-god="9">God 9</div>
+    </div>
+
+    <div class="god-10" data-god="10"></div>
+
+    <div id="god-info"></div>
+
+    <script>
+const godInfo = {
+    1: {
+    name: "God of War",
+    image: "",
+    description: [
+      "",
+      "",
+      ""
+    ],
+    signs: ["", ""],
+    champion: ""
+  },
+  2: {
+    name: "",
+    image: "",
+    description: [
+      "",
+      "",
+      ""
+    ],
+    signs: ["", ""],
+    champion: ""
+  },
+  3: {
+    name: "",
+    image: "",
+    description: [
+      "",
+      "",
+      ""
+    ],
+    signs: ["", ""],
+    champion: ""
+  },
+  4: {
+    name: "Goddes of Nature",
+    image: "",
+    description: [
+      "",
+      "",
+      ""
+    ],
+    signs: ["", ""],
+    champion: ""
+  },
+  5: {
+    name: "Goddes of the Sky",
+    image: "",
+    description: [
+      "",
+      "",
+      ""
+    ],
+    signs: ["", ""],
+    champion: ""
+  },
+  6: {
+    name: "Goddes of Water",
+    image: "",
+    description: [
+      "",
+      "",
+      ""
+    ],
+    signs: ["", ""],
+    champion: ""
+  },
+  7: {
+    name: "Goddes of Magic",
+    image: "",
+    description: [
+      "",
+      "",
+      ""
+    ],
+    signs: ["", ""],
+    champion: ""
+  },
+  8: {
+    name: "Deity of Secrets",
+    image: "",
+    description: [
+      "",
+      "",
+      ""
+    ],
+    signs: ["", ""],
+    champion: ""
+  },
+  9: {
+    name: "God of Death",
+    image: "",
+    description: [
+      "",
+      "",
+      ""
+    ],
+    signs: ["", ""],
+    champion: ""
+  },
+  10: {
+    name: "Void Gods",
+    image: "",
+    description: [
+      "",
+      "",
+      ""
+    ],
+    signs: ["", ""],
+    champion: ""
+  },
+};
+
+document.querySelectorAll('.god, .god-10').forEach(el => {
+  el.addEventListener('click', () => {
+    const existingBox = el.querySelector('.god-info-box');
+
+    if (existingBox) {
+      existingBox.remove();
+      return;
+    }
+
+    document.querySelectorAll('.god-info-box').forEach(box => box.remove());
+
+    const data = godInfo[el.dataset.god];
+    const infoBox = document.createElement('div');
+    infoBox.classList.add('god-info-box', 'active');
+    if (el.dataset.god === "10") infoBox.classList.add('god-10-layout');
+
+    if (el.dataset.god === "10") {
+  infoBox.innerHTML = `
+    <div class="god-content">
+      <div class="text-section">
+        <h1>${data.name}</h1>
+        ${data.description.map(p => `<p>${p}</p>`).join('')}
+      </div>
+      <div class="details">
+        <h3>Signs</h3>
+        <ul>${data.signs.map(s => `<li>${s}</li>`).join('')}</ul>
+        <h3>Champion</h3>
+        <p>${data.champion}</p>
+      </div>
+    </div>
+  `;
+} else {
+  infoBox.innerHTML = `
+    <div class="god-content">
+      <h1>${data.name}</h1>
+      ${data.description.map(p => `<p>${p}</p>`).join('')}
+      <h3>Signs</h3>
+      <ul>${data.signs.map(s => `<li>${s}</li>`).join('')}</ul>
+    </div>
+  `;
+}
+
+    el.appendChild(infoBox);
+  });
+});
+    </script>
+
+    <script>
+let startY = null;
+
+function goBackToIndex() {
+  document.body.style.transition = "opacity 0.7s ease";
+  document.body.style.opacity = "0";
+  setTimeout(() => { window.location.href = "index.html"; }, 700);
+}
+
+window.addEventListener('mousedown', (e) => {
+  startY = e.clientY;
+});
+
+window.addEventListener('mouseup', (e) => {
+  if (startY !== null) {
+    const delta = e.clientY - startY;
+    if (delta > 150) {
+      goBackToIndex();
+    }
+    startY = null;
+  }
+});
+
+window.addEventListener('touchstart', (e) => {
+  startY = e.touches[0].clientY;
+});
+
+window.addEventListener('touchend', (e) => {
+  if (startY !== null) {
+    const delta = e.changedTouches[0].clientY - startY;
+    if (delta < 150) {
+      goBackToIndex();
+    }
+    startY = null;
+  }
+});
+</script>
+
+  </body>
+</html>
