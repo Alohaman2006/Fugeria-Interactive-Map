@@ -1,374 +1,561 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Pantheon</title>
-    <style>
-      body {
-        margin: 0;
-        overflow: hidden;
-        height: 100vh;
-        width: 100vw;
-        background-color: #000000;
-        display: flex;
-         flex-direction: column;
-      }
+<head>
+<meta charset="UTF-8">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="code/map-base.css">
+  <link rel="stylesheet" href="code/map-ui.css">
+  <link rel="stylesheet" href="code/map-layers.css">
+<title>Pantheon</title>
+<style>
 
-      .gods-columns {
-          display: flex;
-          flex: 1;
-         height: 100%; 
-        background: linear-gradient(to right, rgb(116, 0, 0), rgb(221, 144, 0), rgb(163, 163, 0), rgb(24, 146, 0), rgb(0, 165, 165), rgb(23, 41, 124), rgb(126, 0, 126), rgb(70, 70, 70), rgb(153, 153, 153));
-        position: relative;
-        overflow: visible;
-        }
-
-        .gods-columns::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 20%; 
-          background: linear-gradient(to bottom, rgba(0,0,0,0), #000000);
-          pointer-events: none;
-        }       
-
-        .gods-columns .god {
-          flex: 1; 
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-          font-size: 1.2em;
-          transition: transform 0.3s ease;
-          background-color: transparent;
-          color: white;
-          position: relative;
-          background: transparent;
-          transition: transform 0.3s ease;
-          min-height: 100%;
-        }
-
-        .gods-columns .god:hover {
-          transform: scale(1.05);
-        }
-
-        .god-10 {
-         width: 100%;
-         height: 10%;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         background: rgb(0, 0, 0);
-         color: black;
-         cursor: pointer;
-         font-size: 1.2em;
-         position: relative;     
-         overflow: visible;      
-         will-change: transform;  
-         transform-origin: center; 
-         background-image: radial-gradient(circle, rgba(57, 0, 78, 0.445) 2px, transparent 2px);
-         background-size: 10px 10px;
-         transition: transform 0.3s ease;
-        }
-
-        .god-10:hover {
-         transform: scale(1.05);
-        }
-
-        .god-info-box {
-         position: absolute;
-         inset: 0;
-         width: 100%;
-         height: 100%;
-         background: rgba(0, 0, 0, 0.7);
-         color: white;
-         font-size: 1rem;
-         display: flex;
-         align-items: center;
-         justify-content: center;
-         text-align: center;
-         padding: 1em;
-         box-sizing: border-box;
-         opacity: 0;
-         pointer-events: none;
-         transition: opacity 0.3s ease;
-         z-index: 10;
-        }
-
-        .god-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1em;
-  width: 80%;
-  max-width: 800px;
+body {
+    font-family: "Segoe UI", sans-serif;
+    background: #1a1a1a;
+    margin: 0;
+    color: #eee;
 }
 
-
-.god-info-box.god-10-layout .god-content {
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 3em;
-  max-width: 95%;
+/* --- CONTAINER --- */
+.codex-container {
+    width: 80%;
+    max-width: 1500px;
+    margin: 40px auto;
+    background: #222;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 0 20px #000;
+    position: relative;
 }
 
-
-.god-info-box.god-10-layout .text-section {
-  flex: 2;
-  text-align: left;
-  color: #ddd;
+/* --- SLIDE AREA --- */
+.god-slide {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
 }
 
-.god-info-box.god-10-layout .text-section h1 {
-  text-align: left;
+/* --- LEFT IMAGE --- */
+.god-image {
+    width: 45%;
+    min-height: 300px;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.7) blur(0.5px);
+    border-radius: 10px;
+    opacity: 0.85;
 }
 
-.god-info-box.god-10-layout .details {
-  flex: 1;
-  text-align: left;
+/* --- RIGHT TEXT --- */
+.god-info {
+    width: 55%;
 }
 
+.god-info h2 {
+    margin-top: 0;
+    font-size: 26px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 6px;
+}
 
-        .god-info-box.active {
-          opacity: 1;
-          pointer-events: all;
-        }
+/* --- NAVIGATION BUTTONS --- */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 14px;
+    background: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    font-size: 20px;
+}
 
-      #returnPlanet {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: #333;
-        color: white;
-        border: 1px solid #555;
-        border-radius: 6px;
-        padding: 6px 10px;
-        cursor: pointer;
-        font-size: 14px;
-      }
-    </style>
-  </head>
+.nav-btn:hover {
+    background: #555;
+}
 
-  <body>
-    <button id="returnPlanet">Return to Fugeria</button>
+#prevBtn { left: -50px; }
+#nextBtn { right: -50px; }
 
-    <div class="gods-columns">
-    <div class="god" data-god="1">God 1</div>
-    <div class="god" data-god="2">God 2</div>
-    <div class="god" data-god="3">God 3</div>
-    <div class="god" data-god="4">God 4</div>
-    <div class="god" data-god="5">God 5</div>
-    <div class="god" data-god="6">God 6</div>
-    <div class="god" data-god="7">God 7</div>
-    <div class="god" data-god="8">God 8</div>
-    <div class="god" data-god="9">God 9</div>
-    </div>
+</style>
+</head>
+<body>
 
-    <div class="god-10" data-god="10"></div>
+<div class="codex-container">
 
-    <div id="god-info"></div>
+    <button id="prevBtn" class="nav-btn">◀</button>
+    <button id="nextBtn" class="nav-btn">▶</button>
+    <button id="backBtn" class="nav-btn" style="top: 20px; left: 20px; transform: none;">← Back</button>
 
-    <script>
-const godInfo = {
-    1: {
-    name: "God of War",
-    image: "",
-    description: [
-      "",
-      "",
-      ""
-    ],
-    signs: ["", ""],
-    champion: ""
-  },
-  2: {
-    name: "",
-    image: "",
-    description: [
-      "",
-      "",
-      ""
-    ],
-    signs: ["", ""],
-    champion: ""
-  },
-  3: {
-    name: "",
-    image: "",
-    description: [
-      "",
-      "",
-      ""
-    ],
-    signs: ["", ""],
-    champion: ""
-  },
-  4: {
-    name: "Goddes of Nature",
-    image: "",
-    description: [
-      "",
-      "",
-      ""
-    ],
-    signs: ["", ""],
-    champion: ""
-  },
-  5: {
-    name: "Goddes of the Sky",
-    image: "",
-    description: [
-      "",
-      "",
-      ""
-    ],
-    signs: ["", ""],
-    champion: ""
-  },
-  6: {
-    name: "Goddes of Water",
-    image: "",
-    description: [
-      "",
-      "",
-      ""
-    ],
-    signs: ["", ""],
-    champion: ""
-  },
-  7: {
-    name: "Goddes of Magic",
-    image: "",
-    description: [
-      "",
-      "",
-      ""
-    ],
-    signs: ["", ""],
-    champion: ""
-  },
-  8: {
-    name: "Deity of Secrets",
-    image: "",
-    description: [
-      "",
-      "",
-      ""
-    ],
-    signs: ["", ""],
-    champion: ""
-  },
-  9: {
-    name: "God of Death",
-    image: "",
-    description: [
-      "",
-      "",
-      ""
-    ],
-    signs: ["", ""],
-    champion: ""
-  },
-  10: {
-    name: "Void Gods",
-    image: "",
-    description: [
-      "",
-      "",
-      ""
-    ],
-    signs: ["", ""],
-    champion: ""
-  },
+    <div id="slides"></div>
+
+</div>
+ <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+
+// --- GOD DATA --- //
+
+const gods = [
+    {
+        name: "God of War",
+        title: "The Chained God",
+        image: "",
+        lore: `Among all divine beings, none stand as tall-or fall as far-as the Chained God, the uncontested strongest of the divine gods. He embodies not just battle, but the raw will to resist, to rise, to refuse tyranny-whether mortal, divine, or cosmic.
+<br><br>
+Where other gods demand worship, he is the one who answers when no one else will. Soldiers fighting for their homeland, slaves yearning for freedom, rebels facing impossible odds-all find him standing beside them, unseen but unmistakable. His blessing is fury, courage, and the iron certainty that even the weak have the right to stand up and strike back.
+<br><br>
+He is without cruelty, rebellion without chaos, strength without arrogance. To follow him is to walk the razor-edge between righteous defiance and destructive frenzy.
+<br><br><br>
+For ages, he was respected, even beloved, by mortals and gods alike. But everything changed when the titled World Ender began his rampage.
+<br><br>
+The Chained God’s grief, anger and bloodlust was unlike anything the gods had witnessed. The sheer amount of destruction, death and despair caused by the World Ender.
+<br><br>
+The carnage left behind by the World Ender cracked something inside him.
+<br><br>
+His rage shook mountains. His sorrow blackened the skies. His divine presence became a storm impossible to contain, and the line between War and Madness thinned until it nearly vanished.
+<br><br><br>
+In one catastrophic moment-whether accident or divine fate-his uncontrolled rage lashed outward and struck the Goddess of Life.
+ She survived, but the wound scarred the natural world and terrified the pantheon.
+<br><br>
+For the first time, the gods feared him.
+<br><br>
+They knew that if the God of War turned fully mad, he could destroy more than armies-he could unmake civilizations, continents, perhaps even the gods themselves.
+<br><br>
+And so they came together, even those who hated each other, even those who rarely interfered.
+<br><br>
+For the safety of the world, they agreed: War must be chained.
+<br><br><br>
+His bindings are unlike any other artifacts in creation.
+<br><br>
+They are forged from the departed souls of mortals-those who died under his banner, those who prayed to him, those who fought courageously. Not enslaved or tortured, but woven into divine metal, each link representing lives shaped by conflict.
+<br><br>
+To maintain these chains, mortal souls entering the afterlife spend a time in the Chain-Forges, a realm in the heavens where they help strengthen the bindings before their reincarnation. It is seen not as punishment, but as a sacred duty-mortals helping restrain the god who once empowered them.
+<br><br>
+War is not destroyed.
+<br>
+War is not banished.
+<br>
+War is restrained by the very people who once called upon it.
+<br><br><br>
+Even chained, he has not disappeared.
+<br><br>
+He whispers to mortals through iron creaking, the clash of blades, the thrum in a soldier’s chest before battle. His madness has quieted over the ages, tempered by regret and the weight of countless souls holding him down.
+<br><br>
+Some gods believe he grows calmer.
+<br><br>
+Others fear he is only waiting.`
+    },
+    {
+        name: "God of Death",
+        title: "The End of Being",
+        image: "",
+        lore: `The God of Death is the most misunderstood of the pantheon. Neither cruel nor kind, neither doom-bringer nor savior, he is the unfeeling end that awaits all things. Yet to call him unfeeling is not quite right - he feels, deeply, painfully - but he does not allow emotion to sway his duty.
+<br><br>
+He is the stillness in a quiet room.
+<br>
+He is the last breath, the final dream.
+<br>
+He is the guide who waits at the end of every journey.
+<br><br>
+Death is not his choice, but his burden, carried with ancient sadness and unwavering resolve.
+<br><br><br>
+Unlike gods who revel in their power or their influence, Death stands apart. He does not shape mortal destiny, nor meddle in politics, nor make demands for worship. Mortals come to him eventually, and that is enough.
+<br><br>
+He is the truest neutral of the pantheon
+<br><br>
+Despite his cold reputation, he holds a quiet, aching tenderness for mortals. He understands fear. He understands sorrow. He never rushes a soul, and never forces a word from them.
+<br><br><br>
+When a soul dies, it awakens not in torment or splendor, but in a silent misty white field where Death waits patiently. He offers each soul a choice:
+<br>
+Walk in silence, if they wish peace.
+<br>
+Speak with him, if they seek comfort or understanding.
+<br><br>
+He matches his manner to their needs, never failing, never tiring. At the end of the field lies the Edge of Heaven, a cliff overlooking the infinite sky.
+<br><br>
+There, he summons a Book of Life - a perfect, divine record of the soul’s deeds, intentions, failures, and triumphs. Every soul has one, no matter how small or great.
+<br>
+After reading, he judges:
+<br><br>
+The Good and Ordinary
+<br>
+They are sent to the chain-forges for a measured time, contributing to the divine chains that hold the God of War.
+<br><br>
+The Wicked
+<br>
+The worst of the worst are cast into the Void for a timed eternity.
+ They float through nothingness, reliving regrets, unable to lie to themselves, unable to hide from what they were. But-the Void is not eternal damnation. Their exile ends eventually, and when it does, they are reincarnated clean.
+<br><br>
+The One Soul That Was Destroyed
+<br>
+Only one was ever denied reincarnation:
+ The World Ender.
+<br>
+Destroyed in true hatred and weakness, his death-shattered soul could not return.
+ It is Death’s deepest regret but he knows it was necessary.
+<br><br><br>
+Death shares a complicated, tender bond with the Goddess of Life. They are opposites in domain but equals in understanding. Where Life brings beginnings, Death brings closure; where she nurtures, he releases.
+<br><br>
+They meet at the dawn and dusk of eras - two lovers who can never fully embrace, always moving in opposite directions but forever drawn together.
+<br><br>
+He protects her forests in winter.
+<br>
+She mourns for him when wars swell his burden.
+<br>
+Together, they keep the cycle whole.
+<br><br><br>
+The God of War and the God of Death have an ancient rivalry - not born of hatred, but of inevitable conflict. War creates souls for Death to judge, and Death resents the senselessness of it, even while understanding that mortal will is part of the world’s design.
+<br><br>
+War sees Death as an inevitable thief.
+<br>
+Death sees War as a reckless brother.
+<br><br>
+Their clashes are rare, but world-shaking.
+<br><br><br>
+No god has stricter standards for champions.
+<br><br>
+Once, long ago, he chose a being unlike any other - The Undead, a skeleton who wandered the mortal world seeking truth and purpose. In life, he cherished life more deeply than the living. In battle, he served without hesitation. In death, he sacrificed himself to defeat the titled Witch of Calamity, giving everything to protect his mortal friends.
+<br><br>
+It broke the God of Death’s heart.
+<br><br>
+For many generations afterward, Death chose no champion at all, unwilling to bear that pain again.
+<br>
+Even now, he selects champions only when absolutely necessary, and only if the soul is:
+<br>
+Profoundly compassionate
+<br>
+Unshakably devoted to balance
+<br>
+Fearless before mortality
+<br>
+And capable of loving life while serving death
+<br><br>
+In some eras, centuries pass without a single champion.`
+    },
+    {
+        name: "Goddess of Life",
+        title: "The Mother of Being",
+        image: "",
+        lore: `The Goddess of Life is the warm pulse at the heart of the world. Where she points, forests rise. Where she whispers, seeds awaken. She is the soft rain after drought, the first cry of a newborn, the renewal of spring after the deepest winter.
+<br><br>
+She is not naive, nor blindly gentle. Life is fragile, fierce, stubborn, and painful - and she embodies all these truths.
+<br><br>
+She is the Protector of Nature,
+<br>
+the Guardian of Cycles,
+<br>
+the Hope that Survives Every Ending.
+<br><br>
+The Goddess of Life loves the world more deeply than any other deity. But unlike mortals, she is not blind to suffering. She knows that all things must eventually pass to her beloved counterpart - the God of Death - and she accepts this with quiet sorrow.
+<br>
+To her, life is precious because it ends.
+<br><br>
+She does not fight endings; she simply ensures that every beginning is meaningful.
+<br>
+She nurtures:
+<br>
+Every sprouting seed
+<br>
+Every wounded creature
+<br>
+Every mortal seeking to rebuild
+<br>
+Every forest scarred by war or calamity
+<br><br>
+Her power is slow, deep, and enduring - creation by patience, not force.
+<br><br><br>
+During the second rampage of the titled World Ender, the Goddess of Life did what she always does: she worked quietly to mend. She stitched forests back together, restored villages in hidden corners, and sheltered survivors.
+<br><br>
+When the God of War, mad from endless conflict, accidentally struck her in confusion and fury, she was left with a scar on her arm - a wound even her power could not erase.
+<br>
+She forgave him instantly.
+<br><br>
+But that scar changed everything.
+<br>
+War, horror-stricken, spiraled into full madness.
+<br>
+The other gods saw how dangerously far he had fallen.
+<br>
+They chained him, not out of cruelty, but fear of repeating the catastrophe.
+<br><br>
+Life is the reason War was contained - not because she accused him, but because her pain revealed the truth he could not hide.
+<br><br>
+Her scar is now a sacred symbol to mortals:
+ Even gods may bleed. Even gods may forgive.
+<br><br><br>
+Life and Death are not enemies.
+<br>
+They meet more than any other gods, their domains intertwined in every birth and every passing. Their connection is tender, ancient, and unspoken - a love that flows in sighs, not declarations.
+<br>
+She brings beginnings; he brings closure.
+<br>
+She nurtures living forests; he protects dormant ones.
+<br>
+She heals mortals; he comforts them when healing fails.
+<br><br>
+They are two halves of the same river, always touching, never merging. Their affection is subtle:
+<br>
+She leaves flowers on the steps of his quiet realm.
+<br>
+He watches her forests with soft, silent vigilance.
+<br>
+They walk together whenever a great era ends or begins.
+<br><br><br>
+The Goddess of Life chooses champions not for strength, but for compassion, resilience, and the courage to heal what others would abandon.
+<br><br>
+Her champions are:
+<br>
+Protectors of forests
+<br>
+Defenders of the weak
+<br>
+Wanderers who mend what they encounter
+<br>
+Pacifists who can fight, but prefer not to
+<br>
+Leaders who rebuild after catastrophe
+<br><br>
+Her blessings are subtle but profound - growth, restoration, and the ability to stir hope in even the bleakest places.
+<br>
+Some champions are immortal caretakers of sacred groves. Others live ordinary lives, touching the world gently but transforming everything around them.
+
+`
+    },
+    {
+        name: "Goddess of Magic",
+        title: "The All Knowing",
+        image: "",
+        lore: `The Goddess of Magic is the quiet intellect of the pantheon - the ever-thinking, ever-learning mind behind the world’s mysteries. She is the Mother of Spellcraft, the Lady of Knowledge, and the Keeper of Arcane Order.
+<br><br>
+Magic is not merely power to her; it is language, structure, and truth. She sees the world as woven symbols, living equations, and hidden patterns waiting to be understood.
+<br><br>
+Where Life nurtures, and War ignites, Magic organizes.
+ <br>
+Where Secrets disrupt, Magic preserves.
+<br>
+ Where Death judges, Magic records.
+<br><br>
+Her power is logic, clarity, and the pursuit of understanding.
+<br><br>
+When the world was young, raw magic crackled uncontrolled through its lands - wild, stormlike, and destructive. The Goddess of Magic gathered the chaos, shaped it, and breathed structure into it. Through her work:
+<br>
+Spells became possible.
+<br>
+Elements obeyed laws.
+<br>
+Mortals could learn the arcane instead of being consumed by it.
+<br><br>
+She is revered not as a warrior or a mother, but as the architect of the invisible forces that shape reality.
+<br><br>
+To many cultures, she is depicted holding a quill made from a shooting star and a tome bound in aurora-light.
+
+<br><br>
+Among the pantheon, she is the least emotional and the most rational. She does not love or hate quickly. She rarely intervenes directly. She prefers to observe, study, and draw conclusions before acting.
+<br><br>
+If another god reacts with feeling, she reacts with analysis.
+<br>
+This does not make her cold - merely precise.
+<br>
+She values:
+<br>
+Order
+<br>
+Memory
+<br>
+Knowledge
+<br>
+Truth
+<br>
+Understanding
+<br>
+The careful balance of forces
+<br><br>
+Her calm demeanor makes her a stabilizing presence in the pantheon, especially during conflicts between more impulsive deities.
+<br><br>
+Magic and Death share the deepest intellectual connection among the gods.
+<br><br>
+Both keep records:
+<br>
+Death keeps the stories of souls.
+<br>
+Magic keeps the stories of creation.
+<br><br>
+They assist one another often. When a magical anomaly occurs, she may call upon the God of Death to witness and record it. When Death must judge a soul with a life filled with arcane work, he often consults her notes to understand the complexities.
+<br><br>
+Their relationship is not romantic, but built on profound mutual respect.
+<br><br>
+She is one of the few gods who visits Death’s domain by choice, treating it like a library of perfect memories. In return, he allows her access to his archives - something no other deity receives.
+
+`
+    },
+    {
+        name: "Deity of Trickery",
+        title: "The Unkowing",
+        image: "",
+        lore: `The Deity of Trickery is the wildest, most unpredictable, and most dangerous of the pantheon - not because they seek to destroy, but because they seek to stir. They exist in a state between certainty and chaos, shifting form, shifting motives, and shifting plans as easily as breathing.
+<br><br>
+To worshippers, they are a laughing shadow, a shifting mask, a trickster with a thousand faces.
+<br> <br>
+To the gods, they are the great unsettling force, the one who refuses routine, order, or complacency.
+<br><br>
+They are not evil. They are not good.
+<br><br>
+ They are curiosity unbound - and curiosity without caution.
+<br><br>
+In their mind, the world must never grow predictable. Stagnation is death. Boredom is the greatest sin.
+<br><br>
+So they:
+<br>
+Interfere with divine plans simply to see what happens
+<br>
+Test mortals and gods with impossible choices
+<br>
+Push events toward chaos to force growth
+<br>
+Secretly release void gods into the mortal realm
+<br>
+Encourage catastrophes just to watch the world rebuild
+<br>
+Set champions on contradictory quests purely for the outcome
+
+
+<br>
+They call this “stirring the story.”
+<br> 
+Others call it madness.
+<br><br><br>
+The Goddess of Magic finds them dangerously irresponsible.
+ <br>
+The God of Death finds them exhausting.
+<br>
+ The Goddess of Life fears them but understands their purpose.
+<br>
+ The God of War once tolerated them - until everything fell apart.
+<br><br><br>
+Of all their chaotic acts, one stands above all others - the tragedy that broke the world.
+<br><br>
+The Trickster once glimpsed a vision:
+<br> 
+A mortal who would someday burn the world to ash.
+<br><br>
+They did not fear him.
+<br> 
+They were curious.
+<br>
+So they sent their champion - a cruel but clever woman - to investigate the mortal destined for apocalypse. She did more than investigate:
+<br>
+She mocked him.
+<br>
+She dismissed the prophecy.
+<br>
+And, in reckless amusement,
+ she murdered his wife and infant daughter
+ to “test his reaction.”
+<br><br>
+This moment cracked the man’s soul.
+ It forged the World Ender.
+<br>
+He hunted her down and killed her with his bare hands.
+ But the damage was done - to him, to the gods, to the world.
+<br>
+As the World Ender slaughtered armies and sundered nations, the God of War slowly unraveled. The constant death, conflict, and suffering fed his domain until he fractured into madness.
+<br>
+Only then - only when the world began to spiral beyond control - did the Trickster feel something they rarely felt:
+<br>
+Fear.
+ And guilt.
+<br>
+For the first and perhaps only time, they admitted a mistake.
+<br>
+Terrified by War’s descent, they decided to fix the disaster they had created.
+<br>
+They lured the World Ender with illusions of his lost family - a cruel echo of their original sin.
+<br>
+When he reached for them, the Trickster snapped the illusion shut and cast him into an eternal prison in the Void, bound by paradoxes and lies.
+<br>
+For centuries he remained there - until his will broke the impossible and he escaped, more furious than ever.
+<br>
+His escape drove the Trickster to even more desperate measures, smuggling dozens of void gods into the mortal realm to slow him, divert him, or destroy him.
+<br>
+The gods never forgave this.
+
+<br><br><br>
+When they speak, their voice may shift mid-sentence from male to female, harsh to melodic. Their body flickers between forms, never stable for long.
+<br><br>
+They thrive on:
+<br>
+Chaos
+<br>
+Stories unfolding
+<br>
+Unexpected outcomes
+<br>
+Mortals proving the gods wrong
+<br>
+Throwing divine plans into disarray
+<br><br>
+They are feared and loved in equal measure.
+<br><br>
+Some cults worship them for luck and daring; others blame them for every disaster.
+<br>
+They accept both interpretations with a smile.
+`
+    },
+    {
+        name: "Voidgods",
+        title: "Beinings of the Void",
+        image: "",
+        lore: `Numerous beings born from the cosmic void. Their hierarchy is obscure`
+    }
+];
+
+let index = 0;
+
+// --- RENDER FUNCTION --- //
+function renderSlide() {
+    const container = document.getElementById("slides");
+    const g = gods[index];
+
+    container.innerHTML = `
+        <div class="god-slide" style="opacity: 0">
+            <div class="god-image" style="background-image: url('${g.image}')"></div>
+
+            <div class="god-info">
+                <h2>${g.name} — <span style="font-size:18px; color:#bbb">${g.title}</span></h2>
+                <p>${g.lore}</p>
+            </div>
+        </div>
+    `;
+
+    setTimeout(() => {
+        document.querySelector(".god-slide").style.opacity = 1;
+    }, 50);
+}
+
+// --- NAVIGATION --- //
+document.getElementById("nextBtn").onclick = () => {
+    index = (index + 1) % gods.length;
+    renderSlide();
 };
 
-document.querySelectorAll('.god, .god-10').forEach(el => {
-  el.addEventListener('click', () => {
-    const existingBox = el.querySelector('.god-info-box');
+document.getElementById("prevBtn").onclick = () => {
+    index = (index - 1 + gods.length) % gods.length;
+    renderSlide();
+};
 
-    if (existingBox) {
-      existingBox.remove();
-      return;
-    }
+// --- INITIAL LOAD --- //
+renderSlide();
 
-    document.querySelectorAll('.god-info-box').forEach(box => box.remove());
+// --- BACK BUTTON --- //
+document.getElementById("backBtn").onclick = () => {
+    window.location.href = "index.html";
+};
 
-    const data = godInfo[el.dataset.god];
-    const infoBox = document.createElement('div');
-    infoBox.classList.add('god-info-box', 'active');
-    if (el.dataset.god === "10") infoBox.classList.add('god-10-layout');
-
-    if (el.dataset.god === "10") {
-  infoBox.innerHTML = `
-    <div class="god-content">
-      <div class="text-section">
-        <h1>${data.name}</h1>
-        ${data.description.map(p => `<p>${p}</p>`).join('')}
-      </div>
-      <div class="details">
-        <h3>Signs</h3>
-        <ul>${data.signs.map(s => `<li>${s}</li>`).join('')}</ul>
-        <h3>Champion</h3>
-        <p>${data.champion}</p>
-      </div>
-    </div>
-  `;
-} else {
-  infoBox.innerHTML = `
-    <div class="god-content">
-      <h1>${data.name}</h1>
-      ${data.description.map(p => `<p>${p}</p>`).join('')}
-      <h3>Signs</h3>
-      <ul>${data.signs.map(s => `<li>${s}</li>`).join('')}</ul>
-    </div>
-  `;
-}
-
-    el.appendChild(infoBox);
-  });
-});
-    </script>
-
-    <script>
-let startY = null;
-
-function goBackToIndex() {
-  document.body.style.transition = "opacity 0.7s ease";
-  document.body.style.opacity = "0";
-  setTimeout(() => { window.location.href = "index.html"; }, 700);
-}
-
-window.addEventListener('mousedown', (e) => {
-  startY = e.clientY;
-});
-
-window.addEventListener('mouseup', (e) => {
-  if (startY !== null) {
-    const delta = e.clientY - startY;
-    if (delta > 150) {
-      goBackToIndex();
-    }
-    startY = null;
-  }
-});
-
-window.addEventListener('touchstart', (e) => {
-  startY = e.touches[0].clientY;
-});
-
-window.addEventListener('touchend', (e) => {
-  if (startY !== null) {
-    const delta = e.changedTouches[0].clientY - startY;
-    if (delta < 150) {
-      goBackToIndex();
-    }
-    startY = null;
-  }
-});
 </script>
 
-  </body>
+</body>
 </html>
