@@ -40,7 +40,7 @@ body {
 /* --- LEFT IMAGE --- */
 .god-image {
     width: 45%;
-    min-height: 300px;
+    min-height: 1000px;
     background-size: cover;
     background-position: center;
     filter: brightness(0.7) blur(0.5px);
@@ -103,7 +103,7 @@ const gods = [
     {
         name: "God of War",
         title: "The Chained God",
-        image: "",
+        image: "images/pantheon/war.jpg",
         lore: `Among all divine beings, none stand as tall-or fall as far-as the Chained God, the uncontested strongest of the divine gods. He embodies not just battle, but the raw will to resist, to rise, to refuse tyranny-whether mortal, divine, or cosmic.
 <br><br>
 Where other gods demand worship, he is the one who answers when no one else will. Soldiers fighting for their homeland, slaves yearning for freedom, rebels facing impossible odds-all find him standing beside them, unseen but unmistakable. His blessing is fury, courage, and the iron certainty that even the weak have the right to stand up and strike back.
@@ -152,7 +152,7 @@ Others fear he is only waiting.`
     {
         name: "God of Death",
         title: "The End of Being",
-        image: "",
+        image: "images/pantheon/death.jpg",
         lore: `The God of Death is the most misunderstood of the pantheon. Neither cruel nor kind, neither doom-bringer nor savior, he is the unfeeling end that awaits all things. Yet to call him unfeeling is not quite right - he feels, deeply, painfully - but he does not allow emotion to sway his duty.
 <br><br>
 He is the stillness in a quiet room.
@@ -239,7 +239,7 @@ In some eras, centuries pass without a single champion.`
     {
         name: "Goddess of Life",
         title: "The Mother of Being",
-        image: "",
+        image: "images/pantheon/life.jpg",
         lore: `The Goddess of Life is the warm pulse at the heart of the world. Where she points, forests rise. Where she whispers, seeds awaken. She is the soft rain after drought, the first cry of a newborn, the renewal of spring after the deepest winter.
 <br><br>
 She is not naive, nor blindly gentle. Life is fragile, fierce, stubborn, and painful - and she embodies all these truths.
@@ -328,7 +328,7 @@ Some champions are immortal caretakers of sacred groves. Others live ordinary li
     {
         name: "Goddess of Magic",
         title: "The All Knowing",
-        image: "",
+        image: "images/pantheon/magic.jpg",
         lore: `The Goddess of Magic is the quiet intellect of the pantheon - the ever-thinking, ever-learning mind behind the world’s mysteries. She is the Mother of Spellcraft, the Lady of Knowledge, and the Keeper of Arcane Order.
 <br><br>
 Magic is not merely power to her; it is language, structure, and truth. She sees the world as woven symbols, living equations, and hidden patterns waiting to be understood.
@@ -395,7 +395,7 @@ She is one of the few gods who visits Death’s domain by choice, treating it li
     {
         name: "Deity of Trickery",
         title: "The Unkowing",
-        image: "",
+        image: "images/pantheon/trick.jpg",
         lore: `The Deity of Trickery is the wildest, most unpredictable, and most dangerous of the pantheon - not because they seek to destroy, but because they seek to stir. They exist in a state between certainty and chaos, shifting form, shifting motives, and shifting plans as easily as breathing.
 <br><br>
 To worshippers, they are a laughing shadow, a shifting mask, a trickster with a thousand faces.
@@ -508,8 +508,141 @@ They accept both interpretations with a smile.
     {
         name: "Voidgods",
         title: "Beinings of the Void",
-        image: "",
-        lore: `Numerous beings born from the cosmic void. Their hierarchy is obscure`
+        image: "images/pantheon/void.jpg",
+        lore: `Voidgods are beings born outside the Heavens, in the immeasurable darkness known as the Void-a place where reality is thin, and concepts take shape long before form. Unlike the divine gods, who were shaped by the Storyteller’s intent, Voidgods emerged unbidden: raw powers, instincts, and hungers given consciousness.
+<br><br>
+They are not inherently evil, but neither are they bound by creation’s purpose. They lack the divine gods’ sense of order and harmony; instead they follow impulse, curiosity, obsession, or hunger.
+ Some whisper that Voidgods are the Storyteller’s unfinished dreams, fragments of ideas abandoned before the Heavens were built.
+<br><br>
+Where divine gods bind themselves with oaths and cosmic laws, Voidgods respect no such constraints. They move freely-sometimes slipping into the mortal realm through cracks, tears, or invitations from reckless mortals.
+<br><br><br>
+Hierarchy
+<br><br>
+In principle, there is no formal hierarchy among the Voidgods. Each is an island of power, and they acknowledge no authority above themselves.
+<br><br>
+However, by power alone, Voidgods are loosely categorized into three tiers:
+<br><br>
+• First Tier
+<br>
+Extremely rare-perhaps fewer than five.
+ These are beings whose presence bends fate, warps space, and unravels divine workings. Even gods tread carefully around them. Some are older than the heavens; others are living concepts too vast for mortals to survive witnessing.
+ Their power surpasses all divine gods.
+<br><br>
+• Second Tier
+<br>
+Uncommon but feared.
+ They rival the divine gods in strength but act without restraint or ideology. Many divine catastrophes in history can be traced back to Ascendant Voidgods slipping into the mortal world and exerting their influence.
+ Their power is comparable to divine gods.
+<br><br>
+• Third Tier
+<br>
+The vast majority.
+ Weaker than divine gods but far more numerous. Often representing narrow concepts, urges, or obsessions, they are still immensely dangerous. They frequently seek mortal pacts to magnify their domain.
+ Their power is below divine gods, but far more chaotic in nature.
+<br><br><br>
+Divine gods choose a single champion at a time.
+ Voidgods do the opposite.
+<br><br>
+A Voidgod may grant power to as many mortals as they wish, forming pacts that range from mutually beneficial to parasitic. Some demand nothing; others barter with souls, memories, years of life, emotions, or names.
+<br><br>
+Their gifts are often powerful but unpredictable, sometimes changing their bearer permanently-physically or mentally.
+<br><br><br>
+Notable Voidgods:
+<br><br>
+Behemoth
+<br>
+Tier: 1st
+ <br>
+Domain(s): Absolute Consumption
+<br>
+ Personality: Mindless but not stupid; ancient, silent, emotionless. It does not hate or judge - it simply is. A cosmic animal-god whose thoughts are tectonic and whose awareness is slow, deep, and uncaring.
+<br>
+ Motivations: None in the mortal sense. It moves because the void shifts. It feeds because it exists. It destroys because anything entering its path is simply matter to be folded into its enormity.
+<br>
+ Influence on mortals: Behemoth does not interact directly. Mortals interpret its passing as omens - mass hallucinations, earthquakes, nightmare tides. Its rare proximity causes cults of fatalism and doomsayers, but it never chooses followers.
+<br><br>
+
+Crimson King
+<br>
+Tier: 1st
+ <br>
+Domain(s): Dominion
+<br>
+ Personality: Charismatic, commanding, eloquent, and terrifyingly patient. Delightfully cruel in subtle ways rather than loud ones. A monarch who believes rulership is an inevitable cosmic truth.
+<br>
+ Motivations: To expand his dominion - not out of hunger but ideology.
+To “civilize” the void under his rule.
+To bend mortals and lesser void gods to his vision of an ordered abyss.
+<br>
+ Influence on mortals: He forms cults like tyrant-kingdoms: rigid hierarchies, blood-oaths, pacts of loyalty. He rewards ambition and punishes weakness. His blessings grant domination over minds, fearlessness, and power to command lesser creatures.
+<br><br>
+
+King in White
+<br>
+Tier: 1st
+ <br>
+Domain(s): Stillness
+<br>
+ Personality: alm, cold, unnervingly serene. Speaks rarely, yet when it does, its words feel like truths carved into bone. Where the Crimson King rules with dominance, the King in White rules with quiet inevitability.
+<br>
+ Motivations: To create “perfect order” by erasing noise, doubt, and conflict.
+<br>
+ Influence on mortals: Followers become pale, emotionless, ritualistically silent. His cults run monasteries of quiet worship, where individuality fades. Blessings include mental clarity, suppression of fear, and the ability to silence minds or areas.
+<br><br>
+
+Observer
+<br>
+Tier: 2nd (in practice, 1st in power) 
+ <br>
+Domain(s): Observation
+<br>
+ Personality: Detached and uncaring, the observer knows and sees all. It does not interfere or act in any sense.
+<br>
+ Motivations: To witness and to preserve memory.
+<br>
+ Influence on mortals:Gives vision, foresight, perception, and hidden truths to those it chooses. Its followers are scribes, dream-seers, wandering scholars, or lonely prophets. It rarely manipulates events; it simply marks them.
+<br><br>
+
+The Trinue
+<br>
+Tier: 2nd
+ <br>
+Domain(s): Judge, Jury, Executioner
+<br>
+ Personality: Three minds acting as one.
+Each aspect has a distinct thought-pattern, but their will is synchronized. Calm, analytical, and deeply alien - neither good nor evil. Value perfect internal symmetry.
+<br>
+ Motivations: Balance and order of the void, heavens and the mortal realm.
+<br>
+ Influence on mortals: Followers form triads - groups of three who share tasks, oaths, and sometimes dreams. Blessings grant synchronized combat, shared senses, and harmonic casting. Their cults value teamwork and perfect cooperation.
+
+<br><br><br>
+Influence on the Mortal World
+<br><br>
+Voidgods shape the mortal world in ways both subtle and catastrophic:
+<br><br>
+• Thin Places
+<br>
+There are locations where the boundary between the world and the Void frays-ruins, deep oceans, forgotten caves, the aftermath of great tragedies. These are places where Voidgods whisper to mortals or enter directly.
+<br><br>
+• Mortal Pacts
+<br>
+Cheaper, easier, and far more dangerous than divine blessings.
+ Entire cults have risen around a single weak Voidgod, creating localized nightmares or miracles.
+<br><br>
+• Cosmic Disturbances
+<br>
+First-tier Voidgods rarely enter the mortal plane, but when they do, reality bends. Seasons shift, stars dim, magic thins or surges, and sometimes the presence of these beings reshapes the landscape into alien forms.
+<br><br>
+• Historical Calamities
+<br>
+The worst events in mortal history-mass madness, great void storms, the birth of new monsters, the World Ender’s war, etc.-can often be traced to Voidgod interference, sometimes accidental, sometimes deliberate.
+<br><br>
+• Opposition to the Divine
+<br>
+Some Voidgods resent the divine for “colonizing” creation. Others are indifferent. A few actively seek to unmake the heavens and return everything to the primordial silence of the Void.
+<br><br>
+Yet some Voidgods genuinely love the mortal world-its unpredictability, its emotions, its stories-and they protect it fiercely, even from other Voidgods.`
     }
 ];
 
