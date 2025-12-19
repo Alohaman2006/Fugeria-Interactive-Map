@@ -26,10 +26,29 @@
       .info-toggle-btn:hover {
         background: #555;
       }
-      #pantheonBtn {
-        position: absolute;
+
+      /* Sidebar styles */
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        background: rgba(30, 30, 30, 0.95);
+        transition: transform 0.3s ease;
+        z-index: 2000;
+        display: flex;
+        flex-direction: column;
+        width: 200px;
+      }
+
+      .sidebar.closed {
+        transform: translateX(-100%);
+      }
+
+      .sidebar-toggle {
+        position: fixed;
+        left: 10px;
         top: 10px;
-        left: 10px; /* top-left */
         background: #000000;
         color: white;
         border: 1px solid #000000;
@@ -37,11 +56,39 @@
         padding: 6px 10px;
         cursor: pointer;
         font-size: 14px;
-        z-index: 2000;
+        font-family: sans-serif;
+        z-index: 2001;
+        transition: background 0.2s;
       }
 
-      #pantheonBtn:hover {
+      .sidebar-toggle:hover {
         background: #222222;
+      }
+
+      .sidebar-content {
+        padding: 70px 15px 20px 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .sidebar-btn {
+        background: #222222;
+        color: white;
+        border: 1px solid #555;
+        border-radius: 6px;
+        padding: 10px 12px;
+        cursor: pointer;
+        font-size: 14px;
+        font-family: sans-serif;
+        transition: background 0.2s;
+        text-align: center;
+        text-decoration: none;
+        display: block;
+      }
+
+      .sidebar-btn:hover {
+        background: #444444;
       }
     </style>
 
@@ -56,8 +103,15 @@
   </head>
 
   <body>
-    <button id="pantheonBtn">Pantheon</button>
-    <button class="info-toggle-btn" id="infoBtn">Lands</button>
+    <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+
+    <div class="sidebar closed" id="sidebar">
+      <div class="sidebar-content">
+        <button class="sidebar-btn" id="landsBtn">Lands</button>
+        <button class="sidebar-btn" id="pantheonBtn">Pantheon</button>
+        <a href="https://alohaman2006.github.io/Bestiary/" class="sidebar-btn">Beastiary</a>
+      </div>
+    </div>
 
     <div class="info-box" id="infoBox">
       <h3>Fugeria</h3>
@@ -70,17 +124,23 @@
     <script type="module" src="code/threejs.js"></script>
 
     <script>
-      document.getElementById("infoBtn").addEventListener("click", function() {
+      // Sidebar toggle
+      document.getElementById("sidebarToggle").addEventListener("click", function() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("closed");
+      });
+
+      // Lands button
+      document.getElementById("landsBtn").addEventListener("click", function() {
         const box = document.getElementById("infoBox");
         box.classList.toggle("open");
       });
-    </script>
 
-    <script>
-document.getElementById("pantheonBtn").addEventListener("click", () => {
-  window.location.href = "pantheon.html";
-});
-</script>
+      // Pantheon button
+      document.getElementById("pantheonBtn").addEventListener("click", () => {
+        window.location.href = "pantheon.html";
+      });
+    </script>
 
   </body>
 </html>
