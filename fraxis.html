@@ -15,7 +15,7 @@
   
   <div class="info-box" id="infoBox">
     <h3>Frexis</h3>
-    <p>If you are not redirected automatically, <a href="latrian/latrian.html">click here</a>.</p>
+    <p>Nothing Here Yet</p>
   </div>
 
   <div class="info-box" id="tempInfoBox" style="top: 220px;"> 
@@ -80,15 +80,24 @@
     }).bindPopup("<b><a href='latrian/latrian.html'>Latria</a></b>");
     landLayer.addLayer(latria);
 
-    const unk = L.polygon([
+    const vsps = L.polygon([
       [652, 216], [688, 350], [762, 392], [850, 334],
       [856, 70], [696, 78], [624, 209]
     ], {
       color: "blue",
       weight: 2,
       fillOpacity: 0.2
-    }).bindPopup("<b><a href='latrian/latrian.html'>test</a></b>");
-    landLayer.addLayer(unk);
+    }).bindPopup("<b><a href='valserin_spur/south/souther_valserian_spur.html'>Southern Valserinan Spur</a></b>");
+    landLayer.addLayer(vsps);
+
+    const iod = L.polygon([
+      [824, 488], [680, 508], [642, 598], [532, 670], [404, 770], [508, 834], [772, 764], [798, 586]
+    ], {
+      color: "blue",
+      weight: 2,
+      fillOpacity: 0.2
+    }).bindPopup("<b><a href='iod/iod.html'>Island of Death</a></b>");
+    landLayer.addLayer(iod);
 
     // Add the layer control
     L.control.layers(baseMaps, null).addTo(map);

@@ -1,0 +1,186 @@
+<html>
+<head>
+  <title>The Southern Valserian Spur Map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="../../code/map-base.css">
+  <link rel="stylesheet" href="../../code/map-ui.css">
+  <link rel="stylesheet" href="../../code/map-layers.css">
+
+  <style>
+
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div id="coords" style="position: fixed; bottom: 10px; left: 10px; color: white; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; font-family: monospace; z-index: 1000;"></div>  
+  
+  <div class="info-box" id="infoBox">
+    <h3>Southern Valserian Spur</h3>
+    <p>
+    Size:  km2
+    <br>
+    <br>
+    Scale: 1 : 
+    <br>
+    <br>
+    Nations: 5 Nations ; 1 Island
+  </p>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const mapWidth = 2048;
+    const mapHeight = 1366; 
+    const bounds = [[0,0], [mapHeight, mapWidth]];
+    const map = L.map('map', {
+      crs: L.CRS.Simple,
+      minZoom: -0.57,
+      maxZoom: 3,
+      maxBounds: bounds,
+      maxBoundsViscosity: 1.0
+    }).fitBounds(bounds);
+
+    map.on('mousemove', function(e) {
+  const coordDiv = document.getElementById('coords');
+  if (coordDiv) {
+    const x = Math.round(e.latlng.lng);
+    const y = Math.round(e.latlng.lat);
+    coordDiv.innerHTML = `X: ${x}, Y: ${y}`;
+  }
+});
+
+
+
+    const blank = L.imageOverlay('../../images/valserin_spur/south/val_blank.webp', bounds).addTo(map);
+    const detailed = L.imageOverlay('../../images/valserin_spur/south/val_detail.webp', bounds);
+    const temperature = L.imageOverlay('../../images/valserin_spur/south/val_temperture.webp', bounds);
+    const culture = L.imageOverlay('../../images/valserin_spur/south/val_culture.webp', bounds);
+    const political = L.imageOverlay('../../images/valserin_spur/south/val_politic.webp', bounds);
+    // Overlay groups (info layers)
+    const politicalLayer = L.layerGroup();
+    const temperatureLayer = L.layerGroup();
+
+    // Nations
+    const svardey = L.polygon([
+      [186, 1234], [206, 1154], [266, 1112], [266, 1104], [370, 1092], [432, 1106], [508, 1172], [486, 1302], [424, 1396], [242, 1206], [192, 1242]
+    ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
+      .bindPopup("<b><a href='svardey/svardey.html'>Svardey</a></b>");
+    politicalLayer.addLayer(svardey);
+
+    // Example climate markers (only for Temperature map)
+    const ecoldZone = L.marker([218, 1180], {
+      icon: L.divIcon({
+        className: 'temp-label',
+        html: '-15°C',
+        iconSize: [50, 20],
+        iconAnchor: [25, 10]
+      })
+    });
+    const lcoldZone = L.marker([370, 1154], {
+      icon: L.divIcon({
+        className: 'temp-label',
+        html: '5°C',
+        iconSize: [50, 20],
+        iconAnchor: [25, 10]
+        })
+    });
+    const mcoldZone = L.marker([892, 1111], {
+      icon: L.divIcon({
+        className: 'temp-label',
+        html: '5°C',
+        iconSize: [50, 20],
+        iconAnchor: [25, 10]
+        })
+    });
+    const coldZone = L.marker([1555, 1070], {
+      icon: L.divIcon({
+        className: 'temp-label',
+        html: '7°C',
+        iconSize: [50, 20],
+        iconAnchor: [25, 10]
+      })
+    });
+    const scoldZone = L.marker([2000, 738], {
+      icon: L.divIcon({
+        className: 'temp-label',
+        html: '9°C',
+        iconSize: [50, 20],
+        iconAnchor: [25, 10]
+        })
+    });
+
+    temperatureLayer.addLayer(ecoldZone);
+    temperatureLayer.addLayer(lcoldZone);
+    temperatureLayer.addLayer(mcoldZone);
+    temperatureLayer.addLayer(coldZone);
+    temperatureLayer.addLayer(scoldZone);
+
+    const baseMaps = {
+      "Blank": blank,
+      "Detailed": detailed,
+      "Temperature": temperature,
+      "Culture": culture,
+      "Political": political
+    };
+
+    L.control.layers(baseMaps, null).addTo(map);
+
+    map.on('baselayerchange', function(e) {
+      map.removeLayer(politicalLayer);
+      map.removeLayer(temperatureLayer);
+
+      if (e.name === "Political") {
+        map.addLayer(politicalLayer);
+      } else if (e.name === "Temperature") {
+        map.addLayer(temperatureLayer);
+      }
+
+    });
+
+    const InfoControl = L.Control.extend({
+      onAdd: function() {
+        const btn = L.DomUtil.create('button', 'info-toggle-btn');
+        btn.innerHTML = 'ℹ️ Info';
+        L.DomEvent.disableClickPropagation(btn);
+        btn.onclick = function() {
+          const box = document.getElementById('infoBox');
+          box.classList.toggle('open');
+        };
+        return btn;
+      },
+      onRemove: function() {}
+    });
+    
+    new InfoControl({ position: 'topright' }).addTo(map);
+const BackButton = L.Control.extend({
+  onAdd: function() {
+    const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+    const btn = L.DomUtil.create('button', 'back-button', container);
+    btn.innerHTML = '⬅️ Back';
+    btn.title = 'Return to previous map';
+
+    // Prevent map drag when clicking
+    L.DomEvent.disableClickPropagation(btn);
+
+    // Set your custom back target here (relative or absolute URL)
+    const previousMapURL = '../../fraxis.html'; // <-- change manually per map
+
+    btn.onclick = function(e) {
+      e.stopPropagation();
+      window.location.href = previousMapURL;
+    };
+
+    return container;
+  },
+  onRemove: function() {}
+});
+
+// Add it to top-left next to zoom controls
+new BackButton({ position: 'topleft' }).addTo(map);
+
+  </script>
+</body>
+</html>
