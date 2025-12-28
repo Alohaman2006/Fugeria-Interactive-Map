@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Krovia</title>
+  <title>Grodnica</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -16,51 +16,46 @@
   <div id="coords" style="position: fixed; bottom: 10px; left: 10px; color: white; background: rgba(0,0,0,0.5); padding: 4px 8px; border-radius: 4px; font-family: monospace; z-index: 1000;"></div>
 
   <div class="info-box" id="infoBox">
-    <h3>Krovia</h3>
+    <h3>Grodnica</h3>
     <p>
-    Population: ~44,693
+    Population: ~
     <br>
     <br> 
-    Size: ~4021 km2
+    Size: ~ km2
     <br>
     <br> 
-    Location: Northeastern Latrian Peninsula
+    Location:
     <br>
     <br> 
-    Description: Krovia is a land of twilight and endurance - Among the realms in Latria its among the oldest. 
-    Its people speak in slow, old dialects of the Krovian Tongue and keep strict customs of invitation, hearth, and light. 
-    By night the hilltop keeps awaken: crimson banners flutter, and courtly processions of vampires oversee governance. 
-    By day, the mortal steward and the dьnь-sǫdъ manage trade, law, and diplomacy.
+    Description: 
     <br>
     <br> 
-    Climate: Sub-arctic maritime - short, cool summers (~7 °C average), long winters heavy with snow and sea-fog. The coasts remain ice-free due to warm currents, but inland valleys freeze for months.
+    Climate: 
     <br>
     <br> 
-    Economy: Small but efficient, rooted in crafts, metalwork, and trade. The undead nobility favor long-lasting artistry: silver filigree, black-iron armory, fine glass, and dyed cloth. Mortals farm hardy grains and herd reindeer and shaggy oxen. Coastal towns export salt-fish, fur, and iron goods. Vampiric courts quietly fund mercantile ventures through mortal fronts.
+    Economy: 
     <br>
     <br>
-    GDP: 683,910 GC
+    GDP:
     <br>
-    GDP per capita: 15.3 GC
+    GDP per capita:
     <br>
     (1 Gold Coin = $585)
     <br>
     <br>
-    Military: Small, disciplined, and old. The čьrmnogardъ (vampiric knights and retainers) command mortal levies. Few in number but unmatched in night warfare and fort defense. Coastal watchtowers maintain signal-fires, and a modest fleet of black-hulled cutters patrols the Sea.
+    Military: 
     <br>
     <br>
-    Culture: Krovias people are reverent of hearth spirits, oaths, and ancestors. Common folk fear but respect their “nъťь-vladъje.” Superstitions run deep: mirrors are covered at dusk, and candles burn red wax during winter. Despite the vampiric rulers, art and song flourish - ballads of longing, endurance, and cold beauty fill the taverns.
+    Culture: 
     <br>
     <br> 
-    Government: Noctarchatenal Monarchy ; A feudal monarchy ruled by vampiric nobility. The reigning Noctarch (High Lord or Lady) presides from the capital citadel.
-    A mortal dьnь-vladъka, elected from selected and loyal mortal families, administers by daylight. Mortals may serve as mayors or scribes, but true power remains in the nocturnal courts.
-    <br>
+    Government: 
     <br>  
-    Exports: Refined silver and black-iron weapons, Fine dyed fabrics and glassware, Salted fish and furs, Alchemical reagents (notably “Red Mercury”), Rare wines and preserved blood-tonics (for export to other vampiric houses)
+    Exports: 
     <br>
     <br>   
-    Symbol & Colors: Silver - eternity and moonlight, Deep Blue - the night sea surrounding Krovia, Crimson - life’s blood, and the hidden power sustaining the realm
-    <img src="../../images/latrian/krovia/flag_krovia.png" alt="Flag Krovia"  style="width:274px;height:334px;">
+    Symbol & Colors:
+    <img src="../../images/latrian/grodnica/flag_grodnica.png" alt="Flag Grodnica"  style="width:274px;height:334px;">
   </p>
   </div>
 
@@ -87,8 +82,8 @@
     });
 
     // base images (paths relative to this file)
-    const blank = L.imageOverlay('../../images/latrian/krovia/krovia.webp', bounds).addTo(map);
-    const temperature = L.imageOverlay('../../images/latrian/krovia/krovia_temperture.jpg', bounds);
+    const blank = L.imageOverlay('../../images/latrian/grodnica/grodnica.webp', bounds).addTo(map);
+    const temperature = L.imageOverlay('../../images/latrian/grodnica/grodnica_temperture.jpg', bounds);
 
     const baseMaps = {
       "Blank": blank,
@@ -111,11 +106,8 @@
 
     // Towns
     const towns = [
-      { name: "Svarogostь", coords: [716, 1245], url: ".html" },
-      { name: "Vetrinъ", coords: [875, 564], url: ".html" },
-      { name: "Dubrovьnъ", coords: [1124, 1243], url: ".html" },
-      { name: "Radogostь", coords: [1623, 1104], url: ".html" },
-      { name: "Morьskъ", coords: [1718, 1732], url: ".html" },
+      { name: "Vodenьcь", coords: [594, 1022], url: ".html" },
+      { name: "Tichomirъ", coords: [431, 699], url: ".html" },
     ];
     towns.forEach(town => {
       const marker = L.marker(town.coords, { icon: invisibleIcon })
@@ -209,7 +201,7 @@
         L.DomEvent.disableClickPropagation(btn);
         btn.onclick = function() {
           const box = document.getElementById('infoBox');
-          box.classList.toggle('open'); // uses your CSS .info-box.open rules
+          box.classList.toggle('open');
         };
         return btn;
       },
