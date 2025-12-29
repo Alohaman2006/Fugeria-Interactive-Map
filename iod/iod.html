@@ -64,11 +64,11 @@
     const temperatureLayer = L.layerGroup();
 
     // Nations
-    const svardey = L.polygon([
-      [186, 1234], [206, 1154], [266, 1112], [266, 1104], [370, 1092], [432, 1106], [508, 1172], [486, 1302], [424, 1396], [242, 1206], [192, 1242]
+    const velinai = L.polygon([
+      [2004, 56], [2004, 582], [1436, 582], [1436, 56]
     ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
-      .bindPopup("<b><a href='svardey/svardey.html'>Svardey</a></b>");
-    politicalLayer.addLayer(svardey);
+      .bindPopup("<b><a href='velinai.html'>Vēlinai</a></b>");
+    politicalLayer.addLayer(velinai);
 
     // Example climate markers (only for Temperature map)
     const ecoldZone = L.marker([218, 1180], {
