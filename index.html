@@ -107,7 +107,7 @@
 
     <div class="sidebar closed" id="sidebar">
       <div class="sidebar-content">
-        <button class="sidebar-btn" id="landsBtn">Lands</button>
+        <button class="sidebar-btn" id="landsBtn">Frexis</button>
         <button class="sidebar-btn" id="pantheonBtn">Pantheon</button>
         <a href="https://alohaman2006.github.io/Bestiary/" class="sidebar-btn">Beastiary</a>
       </div>
@@ -130,10 +130,9 @@
         sidebar.classList.toggle("closed");
       });
 
-      // Lands button
+      // Frexis button: redirect to frexis.html
       document.getElementById("landsBtn").addEventListener("click", function() {
-        const box = document.getElementById("infoBox");
-        box.classList.toggle("open");
+        window.location.href = "frexis.html";
       });
 
       // Pantheon button
