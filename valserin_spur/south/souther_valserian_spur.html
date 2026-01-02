@@ -64,11 +64,51 @@
     const temperatureLayer = L.layerGroup();
 
     // Nations
-    const svardey = L.polygon([
-      [186, 1234], [206, 1154], [266, 1112], [266, 1104], [370, 1092], [432, 1106], [508, 1172], [486, 1302], [424, 1396], [242, 1206], [192, 1242]
+    const götwarda = L.polygon([
+      [331,848],[230,1078],[258,1275],[0,1593],[0,1798],[640,2040],[1263,1474],[1295,770],[1140,773],[993,883],[756,922],[704,928],[512,840],[469,868]
     ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
-      .bindPopup("<b><a href='svardey/svardey.html'>Svardey</a></b>");
-    politicalLayer.addLayer(svardey);
+      .bindPopup("<b><a href='cathracha/cathracha.html'>Götwarda</a></b>");
+    politicalLayer.addLayer(götwarda);
+
+    const valtamaa = L.polygon([
+      [236,1078],[65,1199],[73,1296],[0,1343],[0,1384],[58,1477],[140,1476],[258,1278]
+    ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
+      .bindPopup("<b><a href='cathracha/cathracha.html'>Valtamaa</a></b>");
+    politicalLayer.addLayer(valtamaa);
+
+    const caletā = L.polygon([
+      [70,1205],[74,1283],[0,1330],[0,1240]
+    ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
+      .bindPopup("<b><a href='cathracha/cathracha.html'>Caletā</a></b>");
+    politicalLayer.addLayer(caletā);
+
+    const čerzemь = L.polygon([
+      [0,1390],[42,1419],[53,1529],[0,1584]
+    ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
+      .bindPopup("<b><a href='cathracha/cathracha.html'>Čerzemь</a></b>");
+    politicalLayer.addLayer(čerzemь);
+
+    const val_nation5 = L.polygon([
+      [86,236],[55,276],[39,230]
+    ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
+      .bindPopup("<b><a href='cathracha/cathracha.html'>TBD</a></b>");
+    politicalLayer.addLayer(val_nation5);
+
+    const val_nation6_1 = L.polygon([
+      [1309,766],[1134,776],[978,867],[729,919],[518,818],[116,851],[126,589],[805,295],[928,108],[1201,138],[549,1329]
+    ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
+      .bindPopup("<b><a href='cathracha/cathracha.html'>TBD</a></b>");
+    politicalLayer.addLayer(val_nation6_1);
+    const val_nation6_2 = L.polygon([
+      [325,79],[251,172],[235,76]
+    ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
+      .bindPopup("<b><a href='cathracha/cathracha.html'>TBD</a></b>");
+    politicalLayer.addLayer(val_nation6_2);
+    const val_nation6_3 = L.polygon([
+      [68,698],[70,818],[0,698],[0,818]
+    ], { color: "transparent", weight: 2, fillOpacity: 0.2 })
+      .bindPopup("<b><a href='cathracha/cathracha.html'>TBD</a></b>");
+    politicalLayer.addLayer(val_nation6_3);
 
     // Example climate markers (only for Temperature map)
     const ecoldZone = L.marker([218, 1180], {
