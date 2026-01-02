@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="../../code/map-base.css">
-  <link rel="stylesheet" href="../../code/map-ui.css">
-  <link rel="stylesheet" href="../../code/map-layers.css">
+  <link rel="stylesheet" href="../code/map-base.css">
+  <link rel="stylesheet" href="../code/map-ui.css">
+  <link rel="stylesheet" href="../code/map-layers.css">
 </head>
 <body>
   <div id="map"></div>
@@ -82,8 +82,8 @@
     });
 
     // base images (paths relative to this file)
-    const blank = L.imageOverlay('../../images/island_of_death/velinai.webp', bounds).addTo(map);
-    const temperature = L.imageOverlay('../../images/island_of_death/velinai_temperature.webp', bounds);
+    const blank = L.imageOverlay('../images/island_of_death/velinai.webp', bounds).addTo(map);
+    const temperature = L.imageOverlay('../images/island_of_death/velinai_temperature.webp', bounds);
 
     const baseMaps = {
       "Blank": blank,
