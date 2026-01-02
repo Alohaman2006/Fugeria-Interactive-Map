@@ -106,11 +106,47 @@
 
     // Towns
     const towns = [
+        // Main Island 1-14 (G) 15-19 (T) 20-24 (P)
       { name: "1", coords: [847, 943], url: ".html" },
       { name: "2", coords: [883, 1013], url: ".html" },
       { name: "3", coords: [834, 850], url: ".html" },
       { name: "4", coords: [832, 1028], url: ".html" },
       { name: "5", coords: [851, 1160], url: ".html" },
+      { name: "6", coords: [856, 1327], url: ".html" },
+      { name: "7", coords: [670, 1403], url: ".html" },
+      { name: "8", coords: [984, 1318], url: ".html" },
+      { name: "9", coords: [1096, 1450], url: ".html" },
+      { name: "10", coords: [1247, 1281], url: ".html" },
+      { name: "11", coords: [1299, 1166], url: ".html" },
+      { name: "12", coords: [1186, 1025], url: ".html" },
+      { name: "13", coords: [982, 871], url: ".html" },
+      { name: "14", coords: [909, 659], url: ".html" },
+      { name: "15", coords: [616, 1179], url: ".html" },
+      { name: "16", coords: [719, 1059], url: ".html" },
+      { name: "17", coords: [547, 1019], url: ".html" },
+      { name: "18", coords: [571, 848], url: ".html" },
+      { name: "19", coords: [412, 803], url: ".html" },
+      { name: "20", coords: [281, 1109], url: ".html" },
+      { name: "21", coords: [302, 1241], url: ".html" },
+      { name: "22", coords: [422, 1190], url: ".html" },
+      { name: "23", coords: [524, 1306], url: ".html" },
+      { name: "24", coords: [620, 1281], url: ".html" },
+        // Second Island + IOD land (O)
+      { name: "25", coords: [1485, 1552], url: ".html" },
+      { name: "26", coords: [1382, 1387], url: ".html" },
+      { name: "27", coords: [1514, 1343], url: ".html" },
+      { name: "28", coords: [1331, 1671], url: ".html" },
+      { name: "29", coords: [1038, 1760], url: ".html" },
+      { name: "30", coords: [623, 1876], url: ".html" },
+        // Third Island (G)
+      { name: "31", coords: [1938, 665], url: ".html" },
+      { name: "32", coords: [1871, 688], url: ".html" },
+      { name: "33", coords: [1932, 519], url: ".html" },
+      { name: "34", coords: [1789, 613], url: ".html" },
+      { name: "35", coords: [1592, 583], url: ".html" },
+      { name: "36", coords: [1477, 667], url: ".html" },
+      { name: "37", coords: [1688, 747], url: ".html" },
+      { name: "38", coords: [1814, 862], url: ".html" },
     ];
     towns.forEach(town => {
       const marker = L.marker(town.coords, { icon: invisibleIcon })
