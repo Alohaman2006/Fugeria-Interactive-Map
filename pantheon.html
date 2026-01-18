@@ -81,6 +81,29 @@ body {
 #prevBtn { left: -50px; }
 #nextBtn { right: -50px; }
 
+#back-button {
+  position: absolute;
+  top: 12px;
+  left: 0px;
+  background: #222;
+  color: white;
+  border: 1px solid #555;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: sans-serif;
+  z-index: 9999;
+  transition: background 0.2s;
+  text-decoration: none;
+  transform: none;
+}
+
+#back-button:hover {
+  transform: translateY(1px);
+  background: #bfbfbf;
+}
+
 </style>
 </head>
 <body>
@@ -89,7 +112,7 @@ body {
 
     <button id="prevBtn" class="nav-btn">◀</button>
     <button id="nextBtn" class="nav-btn">▶</button>
-    <button id="backBtn" class="nav-btn" style="top: 20px; left: 20px; transform: none;">← Back</button>
+    <button id="back-button">← Back</button>
 
     <div id="slides"></div>
 
@@ -684,7 +707,7 @@ document.getElementById("prevBtn").onclick = () => {
 renderSlide();
 
 // --- BACK BUTTON --- //
-document.getElementById("backBtn").onclick = () => {
+document.getElementById("back-button").onclick = () => {
     window.location.href = "index.html";
 };
 

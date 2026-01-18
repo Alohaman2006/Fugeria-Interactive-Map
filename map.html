@@ -38,12 +38,12 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
     const mapWidth = 2048;
-    const mapHeight = 1764; 
+    const mapHeight = 1369; 
     const bounds = [[0,0], [mapHeight, mapWidth]];
     const map = L.map('map', {
       crs: L.CRS.Simple,
-      minZoom: -1.5,
-      maxZoom: 4,
+      minZoom: 0,
+      maxZoom: 3,
       maxBounds: bounds,
       maxBoundsViscosity: 1.0
     }).fitBounds(bounds);
@@ -59,49 +59,43 @@
     });
 
     // Base map layers
-    const blank = L.imageOverlay('images/frexis.webp', bounds).addTo(map);
-    const detailed = L.imageOverlay('images/frexis_detail.webp', bounds);
-    const temperature = L.imageOverlay('images/frexis_temperture.webp', bounds);
-    const tectonic = L.imageOverlay('images/frexis_tectonic.webp', bounds);
+    const blank = L.imageOverlay('images/fugeria.jpg', bounds).addTo(map);
+    const temperature = L.imageOverlay('images/fugeria_temperture.webp', bounds);
 
     const baseMaps = {
       "Blank": blank,
-      "Detailed": detailed,
       "Temperature": temperature,
-      "Tectonic": tectonic
     };
 
     const landLayer = L.layerGroup();
 
     // land
-    const latria = L.polygon([
-      [652, 216], [688, 350], [645, 433], [531, 427],
-      [466, 331], [531, 237]
+    const frexis = L.polygon([
+      [776, 1420], [760, 2048], [182, 2048], [178, 1204]
     ], {
-      color: "blue",
+      color: "transparent",
       weight: 2,
       fillOpacity: 0.2
-    }).bindPopup("<b><a href='latrian/latrian.html'>Latria</a></b>");
-    landLayer.addLayer(latria);
+    }).bindPopup("<b><a href='frexis.html'>Frexis</a></b>");
+    landLayer.addLayer(frexis);
 
-    const vsps = L.polygon([
-      [652, 216], [688, 350], [762, 392], [850, 334],
-      [856, 70], [696, 78], [624, 209]
+    const tbd1 = L.polygon([
+      [794, 598], [170, 846], [188, 34], [614, 162], [784, 360]
     ], {
-      color: "blue",
+      color: "transparent",
       weight: 2,
       fillOpacity: 0.2
-    }).bindPopup("<b><a href='valserin_spur/south/souther_valserian_spur.html'>Southern Valserinan Spur</a></b>");
-    landLayer.addLayer(vsps);
+    }).bindPopup("<b><a href=' '>TBD</a></b>");
+    landLayer.addLayer(tbd1);
 
-    const iod = L.polygon([
-      [824, 488], [680, 508], [642, 598], [532, 670], [404, 770], [508, 834], [772, 764], [798, 586]
+    const tbd2 = L.polygon([
+      [1024, 900], [992, 1154], [808, 1100], [928, 828]
     ], {
-      color: "blue",
+      color: "transparent",
       weight: 2,
       fillOpacity: 0.2
-    }).bindPopup("<b><a href='iod/iod.html'>Island of Death</a></b>");
-    landLayer.addLayer(iod);
+    }).bindPopup("<b><a href=' '>TBD</a></b>");
+    landLayer.addLayer(tbd2);
 
     // Add the layer control
     L.control.layers(baseMaps, null).addTo(map);
@@ -155,7 +149,7 @@
     L.DomEvent.disableClickPropagation(btn);
 
     // Set your custom back target here (relative or absolute URL)
-    const previousMapURL = 'map.html'; // <-- change manually per map
+    const previousMapURL = 'index.html'; // <-- change manually per map
 
     btn.onclick = function(e) {
       e.stopPropagation();

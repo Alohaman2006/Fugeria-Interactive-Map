@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="code/map-ui.css">
     <title>Fugeria</title>
     <style>
+      
       body { margin: 0; overflow: hidden; }
       .info-toggle-btn {
         position: absolute;
@@ -107,19 +108,12 @@
 
     <div class="sidebar closed" id="sidebar">
       <div class="sidebar-content">
-        <button class="sidebar-btn" id="landsBtn">Frexis</button>
+        <button class="sidebar-btn" id="landsBtn">Map</button>
         <button class="sidebar-btn" id="pantheonBtn">Pantheon</button>
         <a href="https://alohaman2006.github.io/Bestiary/" class="sidebar-btn">Beastiary</a>
       </div>
     </div>
 
-    <div class="info-box" id="infoBox">
-      <h3>Fugeria</h3>
-      <p>
-        <h4>Lands</h4>
-        <a href="frexis.html">The Frexis Continet</a>.
-      </p>
-    </div>
 
     <script type="module" src="code/threejs.js"></script>
 
@@ -132,7 +126,7 @@
 
       // Frexis button: redirect to frexis.html
       document.getElementById("landsBtn").addEventListener("click", function() {
-        window.location.href = "frexis.html";
+        window.location.href = "map.html";
       });
 
       // Pantheon button

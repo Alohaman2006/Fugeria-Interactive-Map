@@ -289,8 +289,9 @@
     const BackButton = L.Control.extend({
       onAdd: function() {
         const container = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
-        const btn = L.DomUtil.create('button', 'back-button', container);
-        btn.innerHTML = '⬅️ Back';
+        const btn = L.DomUtil.create('button', '', container);
+        btn.id = 'back-button';
+        btn.innerHTML = '← Back';
         btn.title = 'Return to previous map';
         L.DomEvent.disableClickPropagation(btn);
         const previousMapURL = '../latrian.html';
